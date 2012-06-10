@@ -16,9 +16,19 @@ public class MergePatches {
      */
     public static int MERGIENESS = 3;
 
+    private static void checkArguments(String[] args) {
+        if (args == null || args.length != 1) {
+            System.out.println("Please pass in one argument, the root of the "
+                    + "path that contains the patches you want merged.  This is "
+                    + "typically $ADOPT_OPENJDK/reviewed.");
+            System.exit(-1);
+        }
+    }
+
     private Path globalRoot;
     
     public static void main(String[] args) throws IOException {
+        checkArguments(args);
         Path path = Paths.get(args[0]);
         MergePatches mergePatches = new MergePatches(path);
         mergePatches.generateShellScript(path);
@@ -34,7 +44,7 @@ public class MergePatches {
 
         List<List<DirectoryTreeNode>> out = new ArrayList<>();
 
-        //retrieve groups of diffs until the tree is empty
+        // Retrieve groups of diffs until the tree is empty
         while (visitor.rootNode.getSize() > 1) {
             List<DirectoryTreeNode> bag = visitor.rootNode.getDepthFirstGetBags();
 
@@ -42,7 +52,6 @@ public class MergePatches {
 
             while (bag.size() > 0) {
                 List<DirectoryTreeNode> newBag = new ArrayList<>(bag.subList(0, Math.min(bag.size(), bagSize)));
-
                 bag.removeAll(newBag);
                 out.add(newBag);
             }
@@ -84,7 +93,6 @@ public class MergePatches {
         }
 
     }
-
 
     private static int findListSize(int n) {
         if (n < 10) {
