@@ -22,25 +22,16 @@ public class MergePatches {
         checkArguments(args);
         Path path = Paths.get(args[0]);
         MergePatches mergePatches = new MergePatches(path);
-        mergePatches.generateShellScript(path);
-    }
-
-    private static void checkArguments(String[] args) {
-        if (args == null || args.length != 1) {
-            System.out.println("Please pass in one argument, the root of the "
-                    + "path that contains the patches you want merged.  This is "
-                    + "typically $ADOPT_OPENJDK/reviewed.");
-            System.exit(-1);
-        }
+        mergePatches.generateShellScript();
     }
 
     public MergePatches(Path path) throws IOException {
         globalRoot = path;
     }
 
-    private void generateShellScript(Path path) throws IOException {
-        PatchVisitor visitor = new PatchVisitor(path);
-        Files.walkFileTree(path, visitor);
+    private void generateShellScript() throws IOException {
+        PatchVisitor visitor = new PatchVisitor(globalRoot);
+        Files.walkFileTree(globalRoot, visitor);
 
         List<List<DirectoryTreeNode>> out = new ArrayList<>();
         final DirectoryTreeNode rootNode = visitor.getRootNode();
@@ -52,7 +43,9 @@ public class MergePatches {
             int bagSize = findListSize(bag.size());
 
             while (bag.size() > 0) {
-                List<DirectoryTreeNode> newBag = new ArrayList<>(bag.subList(0, Math.min(bag.size(), bagSize)));
+                final int min = Math.min(bag.size(), bagSize);
+                final List<DirectoryTreeNode> subList = bag.subList(0, min);
+                List<DirectoryTreeNode> newBag = new ArrayList<>(subList);
                 bag.removeAll(newBag);
                 out.add(newBag);
             }
@@ -112,4 +105,14 @@ public class MergePatches {
         }
         return min;
     }
+
+    private static void checkArguments(String[] args) {
+        if (args == null || args.length != 1) {
+            System.out.println("Please pass in one argument, the root of the "
+                    + "path that contains the patches you want merged.  This is "
+                    + "typically $ADOPT_OPENJDK/reviewed.");
+            System.exit(-1);
+        }
+    }
+
 }
