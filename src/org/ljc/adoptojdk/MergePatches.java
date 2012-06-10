@@ -14,16 +14,7 @@ public class MergePatches {
      * from different packages, higher = patches further apart in the
      * package tree will be merged.
      */
-    public static int MERGIENESS = 3;
-
-    private static void checkArguments(String[] args) {
-        if (args == null || args.length != 1) {
-            System.out.println("Please pass in one argument, the root of the "
-                    + "path that contains the patches you want merged.  This is "
-                    + "typically $ADOPT_OPENJDK/reviewed.");
-            System.exit(-1);
-        }
-    }
+    public final static int MERGIENESS = 3;
 
     private Path globalRoot;
     
@@ -32,6 +23,15 @@ public class MergePatches {
         Path path = Paths.get(args[0]);
         MergePatches mergePatches = new MergePatches(path);
         mergePatches.generateShellScript(path);
+    }
+
+    private static void checkArguments(String[] args) {
+        if (args == null || args.length != 1) {
+            System.out.println("Please pass in one argument, the root of the "
+                    + "path that contains the patches you want merged.  This is "
+                    + "typically $ADOPT_OPENJDK/reviewed.");
+            System.exit(-1);
+        }
     }
 
     public MergePatches(Path path) throws IOException {
@@ -43,10 +43,11 @@ public class MergePatches {
         Files.walkFileTree(path, visitor);
 
         List<List<DirectoryTreeNode>> out = new ArrayList<>();
+        final DirectoryTreeNode rootNode = visitor.getRootNode();
 
         // Retrieve groups of diffs until the tree is empty
-        while (visitor.getRootNode().getSize() > 1) {
-            List<DirectoryTreeNode> bag = visitor.getRootNode().getDepthFirstGetBags();
+        while (rootNode.getSize() > 1) {
+            List<DirectoryTreeNode> bag = rootNode.getDepthFirstGetBags();
 
             int bagSize = findListSize(bag.size());
 
