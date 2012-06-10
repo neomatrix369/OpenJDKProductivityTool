@@ -8,7 +8,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 public class PatchVisitor extends SimpleFileVisitor<Path> {
 
-    DirectoryTreeNode rootNode;
+    private DirectoryTreeNode rootNode;
 
     public PatchVisitor(Path root) {
         rootNode = new DirectoryTreeNode(root, root);
@@ -23,5 +23,12 @@ public class PatchVisitor extends SimpleFileVisitor<Path> {
         }
 
         return FileVisitResult.CONTINUE;
+    }
+
+    /**
+     * @return the rootNode
+     */
+    public DirectoryTreeNode getRootNode() {
+        return rootNode;
     }
 }

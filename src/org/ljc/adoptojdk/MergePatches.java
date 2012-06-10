@@ -45,8 +45,8 @@ public class MergePatches {
         List<List<DirectoryTreeNode>> out = new ArrayList<>();
 
         // Retrieve groups of diffs until the tree is empty
-        while (visitor.rootNode.getSize() > 1) {
-            List<DirectoryTreeNode> bag = visitor.rootNode.getDepthFirstGetBags();
+        while (visitor.getRootNode().getSize() > 1) {
+            List<DirectoryTreeNode> bag = visitor.getRootNode().getDepthFirstGetBags();
 
             int bagSize = findListSize(bag.size());
 
