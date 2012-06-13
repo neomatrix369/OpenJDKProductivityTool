@@ -1,122 +1,118 @@
 package org.ljc.adoptojdk;
 
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MergePatches {
-	
-	//this can be tuned to say how willing the program is to merging patches from different packages, higher = patches further apart in the
-	//package tree will be merged
-	public static int MERGIENESS = 3;
-	
-	public static int DIFF_MAX = 10;
-	
-	
 
-	public static void main(String[] args) throws IOException {
-		Path path = Paths.get(args[0]);
-		new MergePatches(path);
-	}
+    /* 
+     * This can be tuned to say how willing the program is to merging patches 
+     * from different packages, higher = patches further apart in the
+     * package tree will be merged.
+     */
+    public final static int MERGIENESS = 3;
 
-	private Path globalRoot;
+    private Path globalRoot;
+    
+    public static void main(String[] args) throws IOException {
+        checkArguments(args);
+        Path path = Paths.get(args[0]);
+        MergePatches mergePatches = new MergePatches(path);
+        mergePatches.generateShellScript();
+    }
 
-	public MergePatches(Path path) throws IOException {
-		globalRoot = path;
-		Visitor vis = new Visitor(path);
-		Files.walkFileTree(path, vis);
-		
-		List<List<DirTreeNode>> out = new ArrayList<>();
+    public MergePatches(Path path) throws IOException {
+        globalRoot = path;
+    }
 
-		//retrieve groups of diffs until the tree is empty
-		while (vis.rootNode.getSize()>1) {
-			List<DirTreeNode> bag = vis.rootNode.getDepthFirstGetBags();
-			
-			int bagSize=findListSize(bag.size());
-			
-			while(bag.size()>0) {
-				List<DirTreeNode> newBag = new ArrayList<>(bag.subList(0, Math.min(bag.size(),bagSize)));
+    private void generateShellScript() throws IOException {
+        PatchVisitor visitor = new PatchVisitor(globalRoot);
+        Files.walkFileTree(globalRoot, visitor);
 
-				bag.removeAll(newBag);
-				out.add(newBag);
-			}
-		}
-		
-		printBags(out);
-		
-	}
-	
-	private void printBags(List<List<DirTreeNode>> out) {
-		
+        List<List<DirectoryTreeNode>> out = new ArrayList<>();
+        final DirectoryTreeNode rootNode = visitor.getRootNode();
 
-		List<String> usedNames = new ArrayList<>();
-		for(List<DirTreeNode> bag: out) {
-			
-			Path lowestCommonAnc = null;
-			//Find common parent
-			for(DirTreeNode file : bag) {
-				if(lowestCommonAnc == null)lowestCommonAnc=file.location;
-				while(!file.location.startsWith(lowestCommonAnc)) {
-					lowestCommonAnc = lowestCommonAnc.getParent();
-				}
-			}
-			
-			String patchName = globalRoot.relativize(lowestCommonAnc).toString().replace("/","_")+".patch";
-			
-			int i=1;
-			while(usedNames.contains(patchName)) {
-				patchName = globalRoot.relativize(lowestCommonAnc).toString().replace("/","_")+"_"+i+".patch";
-				i++;
-			}
-			usedNames.add(patchName);
+        // Retrieve groups of diffs until the tree is empty
+        while (rootNode.getSize() > 1) {
+            List<DirectoryTreeNode> bag = rootNode.getDepthFirstGetBags();
 
-			System.out.println("cat \\");
-			for(DirTreeNode file : bag) {
-				System.out.println(globalRoot.relativize(file.location)+" \\");
-			}
-			System.out.println(" > diffs/"+ patchName+"\n\n");
-		}
-		
-	}
+            int bagSize = findListSize(bag.size());
 
-	private class Visitor extends SimpleFileVisitor<Path> {
-		DirTreeNode rootNode;
+            while (bag.size() > 0) {
+                final int min = Math.min(bag.size(), bagSize);
+                final List<DirectoryTreeNode> subList = bag.subList(0, min);
+                List<DirectoryTreeNode> newBag = new ArrayList<>(subList);
+                bag.removeAll(newBag);
+                out.add(newBag);
+            }
+        }
 
-		public Visitor(Path root) {
-			rootNode = new DirTreeNode(root,root);
-		}
+        printBags(out);
+    }
 
-		@Override
-		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
-				throws IOException {
+    private void printBags(List<List<DirectoryTreeNode>> out) {
 
-			if (file.toString().endsWith(".patch")) {
-				rootNode.addNode(file);
-			}
+        List<String> usedNames = new ArrayList<>();
+        for (List<DirectoryTreeNode> bag : out) {
 
-			return FileVisitResult.CONTINUE;
-		}
-	}
-	
-	private static int findListSize(int n) {
-		if (n < 10)
-			return n;
+            Path lowestCommonAnc = null;
+            //Find common parent
+            for (DirectoryTreeNode file : bag) {
+                if (lowestCommonAnc == null) {
+                    lowestCommonAnc = file.location;
+                }
+                while (!file.location.startsWith(lowestCommonAnc)) {
+                    lowestCommonAnc = lowestCommonAnc.getParent();
+                }
+            }
 
-		int min = 5;
-		for (int i = 5; i < 11; i++) {
-			if (n % i == 0)
-				return i;
+            String patchName = globalRoot.relativize(lowestCommonAnc).toString().replace("/", "_") + ".patch";
 
-			if (n % min < n % i) {
-				min = i;
-			}
-		}
-		return min;
-	}
+            int i = 1;
+            while (usedNames.contains(patchName)) {
+                patchName = globalRoot.relativize(lowestCommonAnc).toString().replace("/", "_") + "_" + i + ".patch";
+                i++;
+            }
+            usedNames.add(patchName);
+
+            System.out.println("cat \\");
+            for (DirectoryTreeNode file : bag) {
+                System.out.println(globalRoot.relativize(file.location) + " \\");
+            }
+            System.out.println(" > diffs/" + patchName + "\n\n");
+        }
+
+    }
+
+    private static int findListSize(int n) {
+        if (n < 10) {
+            return n;
+        }
+
+        int min = 5;
+        for (int i = 5; i < 11; i++) {
+            if (n % i == 0) {
+                return i;
+            }
+
+            if (n % min < n % i) {
+                min = i;
+            }
+        }
+        return min;
+    }
+
+    private static void checkArguments(String[] args) {
+        if (args == null || args.length != 1) {
+            System.out.println("Please pass in one argument, the root of the "
+                    + "path that contains the patches you want merged.  This is "
+                    + "typically $ADOPT_OPENJDK/reviewed.");
+            System.exit(-1);
+        }
+    }
+
 }
