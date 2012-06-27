@@ -3,3 +3,7 @@
 /nbproject/
 /build.xml
 /build/
+.classpath
+.project
+.settings/
+eclipse_bin/
