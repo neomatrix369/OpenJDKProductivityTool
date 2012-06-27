@@ -93,16 +93,21 @@ public class DirectoryTreeNode {
         return Collections.unmodifiableSet(children);
     }
 
+    /**
+     * TODO Issue #12 This isn't really depth first, we need a more accurate name
+     * 
+     * @return
+     */
     public List<DirectoryTreeNode> getDepthFirstGetBags() {
         List<DirectoryTreeNode> out = new ArrayList<>();
 
-        // ok...not quite depth first
+        // OK So this is not quite depth first
         out.addAll(getLeaves());
         children.removeAll(out);
 
         Iterator<DirectoryTreeNode> iter = children.iterator();
 
-        // get bags out of children that are large enough
+        // Get bags out of children that are large enough
         while (iter.hasNext()) {
             DirectoryTreeNode child = iter.next();
 
@@ -112,10 +117,10 @@ public class DirectoryTreeNode {
                 dist = relative.getNameCount();
             }
 
-            if (dist < MergePatches.MERGIENESS) {
+            if (dist < MergePatches.mergePackageRange) {
                 out.addAll(child.getDepthFirstGetBags());
 
-                //remove children from the tree that are fully processed
+                // Remove children from the tree that are fully processed
                 if (child.getSize() == 1) {
                     iter.remove();
                 }

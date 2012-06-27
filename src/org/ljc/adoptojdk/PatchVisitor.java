@@ -40,6 +40,12 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+/**
+ * An extension of the <code>SimpleFileVisitor</code> which 
+ * finds .patch files (from a given root <code>Path</code>) 
+ * and adds them to a <code>DirectoryTreeNode</code> structure 
+ * for later retrieval.
+ */
 public class PatchVisitor extends SimpleFileVisitor<Path> {
 
     private DirectoryTreeNode rootNode;
@@ -59,9 +65,6 @@ public class PatchVisitor extends SimpleFileVisitor<Path> {
         return FileVisitResult.CONTINUE;
     }
 
-    /**
-     * @return the rootNode
-     */
     public DirectoryTreeNode getRootNode() {
         return rootNode;
     }
