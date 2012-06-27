@@ -41,29 +41,34 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The entry point for this patch review utility. Merges patch 
+ * files into groupings that match project groups (and/or more 
+ * fine grained levels) as requested by the OpenJDK project 
+ */
 public class MergePatches {
 
-    /* 
+    private final static int DEFAULT_MERGE_PACKAGE_RANGE = 3;
+
+    /** 
      * This can be tuned to say how willing the program is to merging patches 
      * from different packages, higher = patches further apart in the
      * package tree will be merged.
+     * 
+     * TODO Issue #9 This should not be a public variable, this is an issue with 
+     * how DirectoryTreeNode uses this value
      */
-    public final static int MERGIENESS = 3;
-
-    private Path globalRoot;
+    public static int mergePackageRange;
+    
+    private static Path globalRoot;
     
     public static void main(String[] args) throws IOException {
-        checkArguments(args);
-        Path path = Paths.get(args[0]);
-        MergePatches mergePatches = new MergePatches(path);
-        mergePatches.generateShellScript();
+        sanityCheckArguments(args);
+        processArguments(args);
+        generateShellScript();
     }
 
-    public MergePatches(Path path) throws IOException {
-        globalRoot = path;
-    }
-
-    private void generateShellScript() throws IOException {
+    private static void generateShellScript() throws IOException {
         PatchVisitor visitor = new PatchVisitor(globalRoot);
         Files.walkFileTree(globalRoot, visitor);
 
@@ -88,13 +93,14 @@ public class MergePatches {
         printBags(out);
     }
 
-    private void printBags(List<List<DirectoryTreeNode>> out) {
+    private static void printBags(List<List<DirectoryTreeNode>> out) {
 
         List<String> usedNames = new ArrayList<>();
         for (List<DirectoryTreeNode> bag : out) {
 
             Path lowestCommonAnc = null;
-            //Find common parent
+            
+            // Find common parent
             for (DirectoryTreeNode file : bag) {
                 if (lowestCommonAnc == null) {
                     lowestCommonAnc = file.location;
@@ -140,13 +146,26 @@ public class MergePatches {
         return min;
     }
 
-    private static void checkArguments(String[] args) {
-        if (args == null || args.length != 1) {
-            System.out.println("Please pass in one argument, the root of the "
-                    + "path that contains the patches you want merged.  This is "
-                    + "typically $ADOPT_OPENJDK/reviewed.");
+    private static void sanityCheckArguments(String[] args) {
+        if (args == null || args.length < 1) {
+            System.out.println("Please pass in the mandatory argument. That is, "
+                    + "the root of the path that contains the patches you want merged. "
+                    + "This is typically $ADOPT_OPENJDK/reviewed.");
+            System.exit(-1);
+        }
+        else if (args.length > 2) {
+            System.out.println("Please pass in a max of two arguments.");
             System.exit(-1);
         }
     }
 
+    private static void processArguments(String[] args) {
+        globalRoot = Paths.get(args[0]);
+        if (args.length == 2) {
+            mergePackageRange = Integer.parseInt(args[1]);
+        } else {
+            mergePackageRange = DEFAULT_MERGE_PACKAGE_RANGE;
+        }
+        
+    }
 }
