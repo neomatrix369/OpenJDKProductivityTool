@@ -77,7 +77,7 @@ public class MergePatches {
 
         // Retrieve groups of diffs until the tree is empty
         while (rootNode.getSize() > 1) {
-            List<DirectoryTreeNode> bag = rootNode.getDepthFirstGetBags();
+            List<DirectoryTreeNode> bag = rootNode.getBagsUsingPreOrderTraversal();
 
             int bagSize = findListSize(bag.size());
 
