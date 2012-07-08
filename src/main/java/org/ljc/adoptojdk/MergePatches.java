@@ -39,7 +39,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * The entry point for this patch review utility. Merges patch 
@@ -61,6 +64,7 @@ public class MergePatches {
     public static int mergePackageRange;
     
     private static Path globalRoot;
+    private static List<String> usedNames = new ArrayList<>();
     
     public static void main(String[] args) throws IOException {
         sanityCheckArguments(args);
@@ -74,6 +78,9 @@ public class MergePatches {
 
         List<List<DirectoryTreeNode>> out = new ArrayList<>();
         final DirectoryTreeNode rootNode = visitor.getRootNode();
+
+        Map<String, List<DirectoryTreeNode>> preDefinedBags = new HashMap<>();
+        rootNode.getBagsUsingPreDefinedPackages(preDefinedBags);
 
         // Retrieve groups of diffs until the tree is empty
         while (rootNode.getSize() > 1) {
@@ -90,16 +97,22 @@ public class MergePatches {
             }
         }
 
+        printPredefinedBags(preDefinedBags);
         printBags(out);
+    }
+
+    private static void printPredefinedBags(Map<String, List<DirectoryTreeNode>> preDefinedBags) {
+        for (Entry<String, List<DirectoryTreeNode>> entry : preDefinedBags.entrySet()) {
+            printBagToFile(entry.getKey(), entry.getValue());
+        }
     }
 
     private static void printBags(List<List<DirectoryTreeNode>> out) {
 
-        List<String> usedNames = new ArrayList<>();
         for (List<DirectoryTreeNode> bag : out) {
 
             Path lowestCommonAnc = null;
-            
+
             // Find common parent
             for (DirectoryTreeNode file : bag) {
                 if (lowestCommonAnc == null) {
@@ -110,23 +123,36 @@ public class MergePatches {
                 }
             }
 
-            String patchName = globalRoot.relativize(lowestCommonAnc).toString().replace("/", "_") + ".patch";
+            String patchName = globalRoot.relativize(lowestCommonAnc).toString().replace("/", "_");
 
-            int i = 1;
-            while (usedNames.contains(patchName)) {
-                patchName = globalRoot.relativize(lowestCommonAnc).toString().replace("/", "_") + "_" + i + ".patch";
-                i++;
-            }
-            usedNames.add(patchName);
+            printBagToFile(patchName, bag);
 
-            System.out.println("cat \\");
-            for (DirectoryTreeNode file : bag) {
-                System.out.println(globalRoot.relativize(file.location) + " \\");
-            }
-            System.out.println(" > diffs/" + patchName + "\n\n");
         }
 
     }
+
+    private static void printBagToFile(String patchName, List<DirectoryTreeNode> bag) {
+        System.out.println("cat \\");
+
+        String usedName = patchName;
+
+        int i = 1;
+        while (usedNames.contains(usedName)) {
+            usedName = patchName + i;
+            i++;
+        }
+
+        usedNames.add(usedName);
+
+        usedName += ".patch";
+
+        for (DirectoryTreeNode file : bag) {
+            System.out.println(globalRoot.relativize(file.location) + " \\");
+        }
+        System.out.println(" > diffs/" + usedName + "\n\n");
+
+    }
+
 
     private static int findListSize(int n) {
         if (n < 10) {
