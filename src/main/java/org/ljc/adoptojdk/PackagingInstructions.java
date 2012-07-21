@@ -1,10 +1,11 @@
 package org.ljc.adoptojdk;
 
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
 
 import javax.annotation.Nullable;
 
@@ -16,61 +17,63 @@ import com.google.common.collect.Iterables;
 
 public class PackagingInstructions {
 
-    public static final ImmutableMap<String, Collection<String>> PACKAGING_DEFINITIONS =
-               new ImmutableMap.Builder<String, Collection<String>>()
-                   .put("AWT-Component",      Arrays.asList(".*java.awt.Component.*"))
-                   .put("AWT-Container",      Arrays.asList(".*java.awt.Container.*"))
-                   .put("AWT-Window",         Arrays.asList(".*java.awt.Window.*"))
-                   .put("AWT-Frame",          Arrays.asList(".*java.awt.Frame.*"))
-                   .put("AWT-Dialog",         Arrays.asList(".*java.awt.Dialog.*"))
-                   .put("AWT-Menu",           Arrays.asList(".*java.awt.Menu.*"))
-                   .put("AWT-MenuItem",       Arrays.asList(".*java.awt.MenuItem.*"))
-                   .put("AWT-MenuBar",        Arrays.asList(".*java.awt.MenuBar.*"))
-                   .put("AWT-PopupMenu",      Arrays.asList(".*java.awt.PopupMenu.*"))
-                   .put("AWT-MenuComponent",  Arrays.asList(".*java.awt.MenuComponent.*"))
-                   .put("AWT-Widget",         Arrays.asList(".*java.awt.Canvas.*", ".*java.awt.TextComponent.*", ".*java.awt.AWTEventMulticaster.*", ".*java.awt.Container.*", ".*java.awt.Label.*", ".*java.awt.List.*", ".*java.awt.Choice.*", ".*java.awt.Checkbox.*", ".*java.awt.Button.*", ".*java.awt.Scrollbar.*"))
-                   .put("AWT-Keyboard",       Arrays.asList(".*java.awt.KeyboardFocusManager.*",".*java.awt.DefaultKeyboardFocusManager.*"))
-                   .put("AWT-Toolkit",        Arrays.asList(".*java.awt.Toolkit.*"))
-                   .put("AWT-datatransfer",   Arrays.asList(".*java.awt.datatransfer.*"))
-                   .put("AWT-dnd",            Arrays.asList(".*java.awt.dnd.*"))
-                   .build();
+	private static String PACKAGING_PROPERTY = "patchfile.";
+	private static final String PACKAGING_PROPERTIES_FILE = "packaging.props";
 
-    public static ImmutableMap<String, String> PACKAGE_REGEX_TO_PATCH_NAME;
+	public static ImmutableMap<String, String> PACKAGE_REGEX_TO_PATCH_NAME;
 
-    static {
-        Map<String, String> result = new HashMap<>();
+	static {
 
-        for (Entry<String, Collection<String>> entry : PACKAGING_DEFINITIONS.entrySet()) {
-            for (String packageRegex : entry.getValue()) {
-                result.put(packageRegex, entry.getKey());
-            }
-        }
+		Properties properties = new Properties();
+		try {
+			properties.load(PackagingInstructions.class
+					.getResourceAsStream(PACKAGING_PROPERTIES_FILE));
 
-        PACKAGE_REGEX_TO_PATCH_NAME = ImmutableMap.copyOf(result);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-    }
+		Map<String, String> result = new HashMap<>();
 
-    public static Optional<String> getPatchName(final String className) {
+		for (Entry<Object, Object> entry : properties.entrySet()) {
+			String key = (String) entry.getKey();
+			String value = (String) entry.getValue();
 
-        Collection<String> packageNames = Collections2.filter(
-                PACKAGE_REGEX_TO_PATCH_NAME.keySet(), new Predicate<String>() {
-                    @Override
-                    public boolean apply(@Nullable String arg0) {
-                        return className.matches(arg0);
-                    }
-                });
+			if (key.startsWith(PACKAGING_PROPERTY)) {
+				String fileName = key.substring(PACKAGING_PROPERTY.length());
+				String[] regexes = value.split(",");
 
-        String result = null;
-        if (!packageNames.isEmpty()) {
+				for (String packageRegex : regexes) {
+					result.put(packageRegex, fileName);
+				}
+			}
+		}
 
-            result = PACKAGE_REGEX_TO_PATCH_NAME.get(Iterables.get(packageNames, 0));
+		PACKAGE_REGEX_TO_PATCH_NAME = ImmutableMap.copyOf(result);
 
-            if (packageNames.size() > 1) {
-                System.err.println("WARNING, found multiple packages for class " + className + " selecting: " + result);
-            }
-        }
+	}
 
-        return Optional.fromNullable(result);
+	public static Optional<String> getPatchName(final String className) {
 
-    }
+		Collection<String> packageNames = Collections2.filter(
+				PACKAGE_REGEX_TO_PATCH_NAME.keySet(), new Predicate<String>() {
+					@Override
+					public boolean apply(@Nullable String arg0) {
+						return className.matches(arg0);
+					}
+				});
+
+		String result = null;
+		if (!packageNames.isEmpty()) {
+
+			result = PACKAGE_REGEX_TO_PATCH_NAME.get(Iterables.get(packageNames, 0));
+
+			if (packageNames.size() > 1) {
+				System.err.println("WARNING, found multiple packages for class "+ className + " selecting: " + result);
+			}
+		}
+
+		return Optional.fromNullable(result);
+
+	}
 }
