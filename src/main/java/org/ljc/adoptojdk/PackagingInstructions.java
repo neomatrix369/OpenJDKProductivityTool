@@ -20,7 +20,7 @@ public class PackagingInstructions {
 	private static String PACKAGING_PROPERTY = "patchfile.";
 	private static final String PACKAGING_PROPERTIES_FILE = "packaging.props";
 
-	public static ImmutableMap<String, String> PACKAGE_REGEX_TO_PATCH_NAME;
+	public static ImmutableMap<String, String> FILE_PATH_REGEX_TO_PATCH_NAME;
 
 	static {
 
@@ -43,37 +43,36 @@ public class PackagingInstructions {
 				String fileName = key.substring(PACKAGING_PROPERTY.length());
 				String[] regexes = value.split(",");
 
-				for (String packageRegex : regexes) {
-					result.put(packageRegex, fileName);
+				for (String pathRegex : regexes) {
+					result.put(pathRegex, fileName);
 				}
 			}
 		}
 
-		PACKAGE_REGEX_TO_PATCH_NAME = ImmutableMap.copyOf(result);
+		FILE_PATH_REGEX_TO_PATCH_NAME = ImmutableMap.copyOf(result);
 
 	}
 
-	public static Optional<String> getPatchName(final String className) {
+	public static Optional<String> getPatchName(final String filePath) {
 
-		Collection<String> packageNames = Collections2.filter(
-				PACKAGE_REGEX_TO_PATCH_NAME.keySet(), new Predicate<String>() {
+		Collection<String> matchingRegexs = Collections2.filter(
+				FILE_PATH_REGEX_TO_PATCH_NAME.keySet(), new Predicate<String>() {
 					@Override
 					public boolean apply(@Nullable String arg0) {
-						return className.matches(arg0);
+						return filePath.matches(arg0);
 					}
 				});
 
-		String result = null;
-		if (!packageNames.isEmpty()) {
+		String patchFileName = null;
+		if (!matchingRegexs.isEmpty()) {
+			patchFileName = FILE_PATH_REGEX_TO_PATCH_NAME.get(Iterables.get(matchingRegexs, 0));
 
-			result = PACKAGE_REGEX_TO_PATCH_NAME.get(Iterables.get(packageNames, 0));
-
-			if (packageNames.size() > 1) {
-				System.err.println("WARNING, found multiple packages for class "+ className + " selecting: " + result);
+			if (matchingRegexs.size() > 1) {
+				System.err.println("WARNING, found multiple packages for class "+ filePath + " selecting: " + patchFileName);
 			}
 		}
 
-		return Optional.fromNullable(result);
+		return Optional.fromNullable(patchFileName);
 
 	}
 }
