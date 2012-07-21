@@ -147,7 +147,7 @@ public class DirectoryTreeNode {
         return out;
     }
 
-    private static void addToPatch(Map<String, List<DirectoryTreeNode>> bags, String patchName, DirectoryTreeNode leaf) {
+    private static void addPatchToBag(Map<String, List<DirectoryTreeNode>> bags, String patchName, DirectoryTreeNode leaf) {
         List<DirectoryTreeNode> existingPatches = bags.get(patchName);
 
         if (existingPatches == null) {
@@ -168,7 +168,7 @@ public class DirectoryTreeNode {
             // if we this patch has a predefined patch definition, add it to
             // that bag
             if (patchName.isPresent()) {
-                addToPatch(bags, patchName.get(), leaf);
+                addPatchToBag(bags, patchName.get(), leaf);
                 toRemove.add(leaf);
             }
         }
