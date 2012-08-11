@@ -35,7 +35,20 @@
 package org.ljc.adoptojdk;
 
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.annotation.Nullable;
+
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 
 public class DirectoryTreeNode {
 
@@ -79,14 +92,24 @@ public class DirectoryTreeNode {
         return size;
     }
 
-    private List<DirectoryTreeNode> getLeaves() {
-        List<DirectoryTreeNode> out = new ArrayList<>();
-        for (DirectoryTreeNode child : children) {
-            if (child.getChildren().isEmpty()) {
-                out.add(child);
-            }
-        }
-        return out;
+    private Collection<DirectoryTreeNode> getLeaves() {
+        return Collections2.filter(children,
+                new Predicate<DirectoryTreeNode>() {
+                    @Override
+                    public boolean apply(@Nullable DirectoryTreeNode child) {
+                        return child.getChildren().isEmpty();
+                    }
+                });
+    }
+
+    private Collection<DirectoryTreeNode> getNonLeaves() {
+        return Collections2.filter(children,
+                new Predicate<DirectoryTreeNode>() {
+                    @Override
+                    public boolean apply(@Nullable DirectoryTreeNode child) {
+                        return !child.getChildren().isEmpty();
+                    }
+                });
     }
 
     private Set<DirectoryTreeNode> getChildren() {
@@ -122,5 +145,42 @@ public class DirectoryTreeNode {
         }
 
         return out;
+    }
+
+    private static void addPatchToBag(Map<String, List<DirectoryTreeNode>> bags, String patchName, DirectoryTreeNode leaf) {
+        List<DirectoryTreeNode> existingPatches = bags.get(patchName);
+
+        if (existingPatches == null) {
+            existingPatches = new ArrayList<>();
+            bags.put(patchName, existingPatches);
+        }
+
+        existingPatches.add(leaf);
+    }
+
+    public void getBagsUsingPreDefinedPackages(Map<String, List<DirectoryTreeNode>> bags) {
+        List<DirectoryTreeNode> toRemove = new ArrayList<>();
+
+        // first process all the leaf nodes
+        for (DirectoryTreeNode leaf : getLeaves()) {
+            Optional<String> patchName = PackagingInstructions.getPatchName(leaf.location.toString());
+
+            // if we this patch has a predefined patch definition, add it to
+            // that bag
+            if (patchName.isPresent()) {
+                addPatchToBag(bags, patchName.get(), leaf);
+                toRemove.add(leaf);
+            }
+        }
+
+        // process non leaf children
+        for (DirectoryTreeNode child : getNonLeaves()) {
+            child.getBagsUsingPreDefinedPackages(bags);
+            // Remove children from the tree that are fully processed
+            if (child.getSize() == 1) {
+                toRemove.add(child);
+            }
+        }
+        children.removeAll(toRemove);
     }
 }
