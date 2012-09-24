@@ -21,10 +21,11 @@ just add to the list. New packages get unclassified supergroup and group
 names. Log all activities.
 
 [ ] Return all/some/any class details for any passed details I.e. class or 
-package or group or subgroup name. Log all activities. [ ] Build a list of 
-classes to work on (along with other class details, classified with warning 
-types and number of warnings). Should allow fix, patch and test management. 
-Log all activities.
+package or group or subgroup name. Log all activities. 
+
+[ ] Build a list of classes to work on (along with other class details, 
+classified by warning types and number of warnings). Should allow fix, 
+patch and test management. Log all activities.
 
 [ ] Allow reviewer to log submissions from contributors, given input of name, 
 email address, date and time of submission. Log errors and indicate in 
