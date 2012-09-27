@@ -7,44 +7,53 @@ import static org.ljc.adoptojdk.Fluency.*;
 import org.ljc.adoptojdk.NotAFullyQualifiedClassNameException;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import static org.ljc.adoptojdk.DatabaseOfOpenJDKContributors.*;
 
 public class ReturnClassOwnerBehaviour {
 	
+	private static final String JAVA_AWT_EVENT_ACTION_CLASSNAME = "java.awt.event.Action";
 	private DatabaseOfOpenJDKContributors dbOpenJDKContributors;
 	private String fullyQualifiedClassName;
-	private String classOwner;
+	private String classOwnerName;
+	private String[] classOwnerDetails;
 
 	@Test
-	public void shouldReturnClassOwnerWhenClassNamePassedIn() throws NotAFullyQualifiedClassNameException {
+	public void shouldReturnClassOwnerNameWhenClassNameIsPassedIn() throws NotAFullyQualifiedClassNameException {
 		// Given
 		// we have access to a list of contributors
 		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors();
 
 		// When
 		// user passes class name (fully qualified or unqualified)
-		fullyQualifiedClassName = getFullyQualifiedClassName("java.awt.event.Action");
-		classOwner = getOwnerNameByClassName(fullyQualifiedClassName);
+		ReturnClassOwner returnClassOwner = new ReturnClassOwner(JAVA_AWT_EVENT_ACTION_CLASSNAME);
+		classOwnerName = returnClassOwner.getClassOwnerName();
 		
 		// Then
 		// check if result returned is not null
-		assertFalse(ifThe(classOwner == null));
+		assertFalse(ifThe(classOwnerName == null));
 		// check if result returned is not empty
-		assertFalse(ifThe(classOwner.equals("")));
+		assertFalse(ifThe(classOwnerName.equals("")));
 	}
+	
+	@Test
+	public void shouldReturnClassOwnerDetailsWhenIsClassNamePassedIn() throws NotAFullyQualifiedClassNameException {
+		// Given
+		// we have access to a list of contributors
+		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors();
 
-	private String getOwnerNameByClassName(String fullyQualifiedClassName) {
-		String[] dbRecord = {};
-		String ownerName = "";
-		dbRecord = dbOpenJDKContributors.findRecordBy(FULLY_QUALIFIED_CLASS_NAME, fullyQualifiedClassName);
-		if ((dbRecord != null) && (dbRecord.length > 0)) { 
-			ownerName = dbRecord[CONTRIBUTOR_NAME];
-		}
-		return ownerName;
-	}
-
-	private String getFullyQualifiedClassName(String paramClassName) throws NotAFullyQualifiedClassNameException {
-		return new FullyQualifiedClassName(paramClassName).getFullyQualifiedClassName();
-	}
+		// When
+		// user passes class name (fully qualified or unqualified)
+		ReturnClassOwner returnClassOwner = new ReturnClassOwner(JAVA_AWT_EVENT_ACTION_CLASSNAME);
+		classOwnerDetails = returnClassOwner.getClassOwnerDetails();
+		
+		// Then
+		// check if result returned is not null
+		assertFalse(ifThe(classOwnerDetails == null));
+		// check if result returned has 1 or more elements
+		assertTrue(ifThe(classOwnerDetails.length > 0));
+		// check if result returned is not empty
+		assertFalse(ifThe(classOwnerDetails.equals("")));
+	}	
 }

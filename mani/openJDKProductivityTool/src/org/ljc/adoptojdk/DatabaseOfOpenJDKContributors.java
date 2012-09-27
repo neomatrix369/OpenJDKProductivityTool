@@ -40,7 +40,7 @@ public class DatabaseOfOpenJDKContributors {
 		for (int row=0; row<databaseOfContributors.length; row++) {
 			for (int col=0; col<databaseOfContributors[row].length; col++) {
 				if (databaseOfContributors[row].length > columnIndex) {
-					if (databaseOfContributors[row][columnIndex] == fullyQualifiedClassName) {
+					if (databaseOfContributors[row][columnIndex].equals(fullyQualifiedClassName)) {
 						result = databaseOfContributors[row];
 						break;
 					}

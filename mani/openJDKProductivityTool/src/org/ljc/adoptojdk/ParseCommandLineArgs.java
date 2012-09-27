@@ -1,9 +1,10 @@
 package org.ljc.adoptojdk;
 
+import static org.ljc.adoptojdk.ReturnClassOwner.ReturnClassOwner.*;
+
 public class ParseCommandLineArgs {
 	
-	static final String CLASS_OWNER_SWITCH = "-co";
-	private String parseResult = "";
+	private ParsedCommandLineArgsResult parsedResult = new ParsedCommandLineArgsResult();
 	private String commandLineArgs = "";
 	
 	public ParseCommandLineArgs(String commandLineArgs) {
@@ -13,13 +14,16 @@ public class ParseCommandLineArgs {
 
 	private void doParseCommandLineArgs(String commandLineArgs) {
 		if (commandLineArgs.equals("")) {
-			parseResult = performDisplayUsageScreen(getUsageText());
+			parsedResult.setErrorMessage(performDisplayUsageScreen(getUsageText()));
 		}
 		else {
 			// process arguments and display message
 			if (argumentsAreValid(commandLineArgs)) {
+				
+				// CLASS OWNER SWITCH: -co
 				if (commandLineArgs.toLowerCase().startsWith(CLASS_OWNER_SWITCH)) {
 					String classNames;
+					parsedResult.setCommandLineSwitch(CLASS_OWNER_SWITCH);
 					try	{
 						int startIndex = CLASS_OWNER_SWITCH.length();
 						int endIndex = commandLineArgs.length();
@@ -28,28 +32,25 @@ public class ParseCommandLineArgs {
 					}
 					catch (Exception e) {
 						classNames = "";
+						parsedResult.setErrorMessage("Error message: " + e.getMessage());
 					}
 					if ((classNames == null) || (classNames.equals(""))) {
-						parseResult = getIncompleteClassOwnerArgsMessage(commandLineArgs) + 
-				              getUsageText();
+						parsedResult.setErrorMessage(getIncompleteClassOwnerArgsMessage(commandLineArgs) + getUsageText());
 					} else {
-						parseResult = classNames;
+						parsedResult.setResultString(classNames);
 					}
 				} else {
 					// do nothing yet
 				}
-				
 			} else {
-				parseResult = getInvalidArgsPassedMessage(commandLineArgs) + 
-			                  getUsageText();
+				parsedResult.setErrorMessage(getInvalidArgsPassedMessage(commandLineArgs) + getUsageText());
 			}
 		}
 	}
 		
 	private boolean argumentsAreValid(String commandLineArgs) {
-		//TODO: more implementation will follow
-		//commandLineArgs = commandLineArgs.trim();
-		return commandLineArgs.toLowerCase().contains(CLASS_OWNER_SWITCH);
+		commandLineArgs = commandLineArgs.trim();
+		return commandLineArgs.toLowerCase().startsWith(CLASS_OWNER_SWITCH);
 	}
 
 	private String performDisplayUsageScreen(String inUsageText) {
@@ -65,8 +66,8 @@ public class ParseCommandLineArgs {
 		return "Usage text";
 	}
 	
-	public String getParseResults() {
-		return parseResult;
+	public ParsedCommandLineArgsResult getParseResults() {
+		return parsedResult;
 	}
 
 	static String getInvalidArgsPassedMessage(String inCommandLineArgs) {
