@@ -1,0 +1,14 @@
+29-09-12
+	Populate Readme.md file [pending]
+	Create pom.xml [done]
+	Create dist.xml [done]
+	Populate Usage.txt [pending]
+	
+	ParseCommandLineArgs all args 
+		-write tests to implement what's currently in the main() function 
+		(move implementation to production only after test is/are available)
+		
+	DatabaseOfOpenJDKContributors [done]
+		-write tests to implement reading data off a physical file (given a path and filename)
+
+	Write example scripts to run and use the utility and place them under the example-scripts folder

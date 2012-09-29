@@ -1,15 +1,17 @@
 package org.ljc.adoptojdk.ReturnClassOwner;
 
 import org.junit.Test;
-import org.ljc.adoptojdk.DatabaseOfOpenJDKContributors;
-import org.ljc.adoptojdk.FullyQualifiedClassName;
-import static org.ljc.adoptojdk.Fluency.*;
-import org.ljc.adoptojdk.NotAFullyQualifiedClassNameException;
+
+import static org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors.*;
+import static org.ljc.adoptojdk.Others.Fluency.*;
+
+import org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors;
+import org.ljc.adoptojdk.Others.FullyQualifiedClassName;
+import org.ljc.adoptojdk.Others.NotAFullyQualifiedClassNameException;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import static org.ljc.adoptojdk.DatabaseOfOpenJDKContributors.*;
 
 public class ReturnClassOwnerBehaviour {
 	

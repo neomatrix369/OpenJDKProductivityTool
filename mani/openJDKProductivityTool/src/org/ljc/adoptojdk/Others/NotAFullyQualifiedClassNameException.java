@@ -1,4 +1,4 @@
-package org.ljc.adoptojdk;
+package org.ljc.adoptojdk.Others;
 
 public class NotAFullyQualifiedClassNameException extends Exception {
 	public NotAFullyQualifiedClassNameException(String message) {

@@ -1,4 +1,4 @@
-package org.ljc.adoptojdk;
+package org.ljc.adoptojdk.ParseCommandLineArgs;
 
 import static org.ljc.adoptojdk.ReturnClassOwner.ReturnClassOwner.*;
 
@@ -62,7 +62,7 @@ public class ParseCommandLineArgs {
 		return commandLineArgs;
 	}
 
-	static String getUsageText() {
+	public static String getUsageText() {
 		return "Usage text";
 	}
 	
@@ -70,11 +70,11 @@ public class ParseCommandLineArgs {
 		return parsedResult;
 	}
 
-	static String getInvalidArgsPassedMessage(String inCommandLineArgs) {
+	public static String getInvalidArgsPassedMessage(String inCommandLineArgs) {
 		return "Invalid arguments passed: [" + inCommandLineArgs + "]. Please see usage text.\n\n";
 	}
 	
-	static String getIncompleteClassOwnerArgsMessage(String inCommandLineArgs) {
+	public static String getIncompleteClassOwnerArgsMessage(String inCommandLineArgs) {
 		return "Incomplete Class Owner's arguments were passed: [" + inCommandLineArgs + "]. Class name(s) missing. Please see usage text.\n\n";
 	}
 }

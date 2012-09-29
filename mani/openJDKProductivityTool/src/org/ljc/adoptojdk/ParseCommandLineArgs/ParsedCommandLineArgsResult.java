@@ -1,4 +1,4 @@
-package org.ljc.adoptojdk;
+package org.ljc.adoptojdk.ParseCommandLineArgs;
 
 public class ParsedCommandLineArgsResult {
 	private String commandLineSwitch = "";

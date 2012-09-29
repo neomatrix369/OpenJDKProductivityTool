@@ -1,16 +1,16 @@
 package org.ljc.adoptojdk.ReturnClassOwner;
 
 import static org.junit.Assert.assertTrue;
-import static org.ljc.adoptojdk.Fluency.*;
-import static org.ljc.adoptojdk.DatabaseOfOpenJDKContributors.*;
+import static org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors.*;
+import static org.ljc.adoptojdk.Others.Fluency.*;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.steps.Steps;
-import org.ljc.adoptojdk.DatabaseOfOpenJDKContributors;
-import org.ljc.adoptojdk.FullyQualifiedClassName;
-import org.ljc.adoptojdk.NotAFullyQualifiedClassNameException;
+import org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors;
+import org.ljc.adoptojdk.Others.FullyQualifiedClassName;
+import org.ljc.adoptojdk.Others.NotAFullyQualifiedClassNameException;
 
 public class ReturnClassOwnerSteps extends Steps
 {
@@ -20,7 +20,7 @@ public class ReturnClassOwnerSteps extends Steps
 	private Object classContributor;
 
 
-	@Given("We have details of a list of contributors who have submitted patches to OpenJDK")
+	@Given("We have details of a list of contributors who have submitted patches to OpenJDK list of contributors")
 	public void getListOfOpenJDKContributors()
 	{
 		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors();
@@ -44,7 +44,7 @@ public class ReturnClassOwnerSteps extends Steps
 	}
 
 	
-	@Then("the utility program should look into the database containing list of contributors and return their details, which will contain their email address, etc...")
+	@Then("the utility program should look into the database containing list of contributors and return the contributor and their details, which will contain their email address, etc...")
 	public void searchOwner()
 	{
 		assertTrue(ifItIs(not(classContributor.equals(""))));

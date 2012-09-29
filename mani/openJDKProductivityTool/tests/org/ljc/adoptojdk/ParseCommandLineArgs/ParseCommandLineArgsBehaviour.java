@@ -1,11 +1,13 @@
-package org.ljc.adoptojdk;
+package org.ljc.adoptojdk.ParseCommandLineArgs;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static org.ljc.adoptojdk.ParseCommandLineArgs.*;
+import static org.ljc.adoptojdk.ParseCommandLineArgs.ParseCommandLineArgs.*;
 import static org.ljc.adoptojdk.ReturnClassOwner.ReturnClassOwner.*;
-import org.ljc.adoptojdk.ParseCommandLineArgs;
+
+import org.ljc.adoptojdk.ParseCommandLineArgs.ParseCommandLineArgs;
+import org.ljc.adoptojdk.ParseCommandLineArgs.ParsedCommandLineArgsResult;
 
 public class ParseCommandLineArgsBehaviour {
 	
@@ -16,7 +18,8 @@ public class ParseCommandLineArgsBehaviour {
 		ParsedCommandLineArgsResult outputAfterParsingArgs = parseCommandLineArgs.getParseResults();
 		
 		assertTrue(outputAfterParsingArgs.getErrorStatus());		
-		assertTrue(outputAfterParsingArgs.getErrorMessage().equals(ParseCommandLineArgs.getUsageText()));
+		assertTrue(outputAfterParsingArgs.getErrorMessage().equals(
+				ParseCommandLineArgs.getUsageText()));
 	}
 
 	@Test 

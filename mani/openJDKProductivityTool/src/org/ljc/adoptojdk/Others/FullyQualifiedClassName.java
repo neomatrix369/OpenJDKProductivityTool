@@ -1,4 +1,4 @@
-package org.ljc.adoptojdk;
+package org.ljc.adoptojdk.Others;
 
 public class FullyQualifiedClassName {
 	private String className;

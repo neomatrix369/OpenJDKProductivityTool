@@ -15,6 +15,6 @@ I want to retrieve the name and contact details of the submitter using a fully q
 
 Scenario: Utility that you could give a class name to and have it return an owner
 
-Given We have details of a list of contributors who have submitted patches to OpenJDK 
+Given We have details of a list of contributors who have submitted patches to OpenJDK sorted by date of submission 
 When A developer runs the utility program in Linux/Unix and passes fully qualified class name as a parameter
-Then the utility program should look into the database containing list of contributors and return their details, which will contain their email address, etc...
+Then the utility program should look into the database containing list of contributors and return the contributor and their details, which will contain their email address, etc...

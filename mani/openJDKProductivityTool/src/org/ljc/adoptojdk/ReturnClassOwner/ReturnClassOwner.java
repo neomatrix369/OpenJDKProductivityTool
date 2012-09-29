@@ -1,11 +1,11 @@
 package org.ljc.adoptojdk.ReturnClassOwner;
 
-import static org.ljc.adoptojdk.DatabaseOfOpenJDKContributors.CONTRIBUTOR_NAME;
-import static org.ljc.adoptojdk.DatabaseOfOpenJDKContributors.FULLY_QUALIFIED_CLASS_NAME;
+import static org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors.CONTRIBUTOR_NAME;
+import static org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors.FULLY_QUALIFIED_CLASS_NAME;
 
-import org.ljc.adoptojdk.DatabaseOfOpenJDKContributors;
-import org.ljc.adoptojdk.FullyQualifiedClassName;
-import org.ljc.adoptojdk.NotAFullyQualifiedClassNameException;
+import org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors;
+import org.ljc.adoptojdk.Others.FullyQualifiedClassName;
+import org.ljc.adoptojdk.Others.NotAFullyQualifiedClassNameException;
 
 public class ReturnClassOwner {
 	public static final String CLASS_OWNER_SWITCH = "-co";
