@@ -2,19 +2,19 @@ package org.ljc.adoptojdk.ParseCommandLineArgs;
 
 import static org.ljc.adoptojdk.ReturnClassOwner.ReturnClassOwner.*;
 
-public class ParseCommandLineArgs {
+public class ParseEachCommandLineArgument {
 	
 	private ParsedCommandLineArgsResult parsedResult = new ParsedCommandLineArgsResult();
 	private String commandLineArgs = "";
 	
-	public ParseCommandLineArgs(String commandLineArgs) {
+	public ParseEachCommandLineArgument(String commandLineArgs) {
 		this.commandLineArgs = commandLineArgs.trim();		
 		doParseCommandLineArgs(this.commandLineArgs);
 	}
 
 	private void doParseCommandLineArgs(String commandLineArgs) {
 		if (commandLineArgs.equals("")) {
-			parsedResult.setErrorMessage(performDisplayUsageScreen(getUsageText()));
+			parsedResult.setErrorMessage(getNoArgumentsPassedMessage());
 		}
 		else {
 			// process arguments and display message
@@ -35,7 +35,7 @@ public class ParseCommandLineArgs {
 						parsedResult.setErrorMessage("Error message: " + e.getMessage());
 					}
 					if ((classNames == null) || (classNames.equals(""))) {
-						parsedResult.setErrorMessage(getIncompleteClassOwnerArgsMessage(commandLineArgs) + getUsageText());
+						parsedResult.setErrorMessage(getIncompleteClassOwnerArgsMessage(commandLineArgs));
 					} else {
 						parsedResult.setResultString(classNames);
 					}
@@ -43,27 +43,22 @@ public class ParseCommandLineArgs {
 					// do nothing yet
 				}
 			} else {
-				parsedResult.setErrorMessage(getInvalidArgsPassedMessage(commandLineArgs) + getUsageText());
+				parsedResult.setErrorMessage(getInvalidArgsPassedMessage(commandLineArgs));
 			}
 		}
 	}
 		
+	public static String getNoArgumentsPassedMessage() {
+		return "No arguments passed.";
+	}
+
 	private boolean argumentsAreValid(String commandLineArgs) {
 		commandLineArgs = commandLineArgs.trim();
 		return commandLineArgs.toLowerCase().startsWith(CLASS_OWNER_SWITCH);
 	}
 
-	private String performDisplayUsageScreen(String inUsageText) {
-		System.out.println(inUsageText);
-		return inUsageText;
-	}
-
 	public String getCommandLineArguments() {
 		return commandLineArgs;
-	}
-
-	public static String getUsageText() {
-		return "Usage text";
 	}
 	
 	public ParsedCommandLineArgsResult getParseResults() {
