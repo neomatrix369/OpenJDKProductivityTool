@@ -5,8 +5,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>openJDKProductivityTool</name>
 	<description>Utility program to assist in openJDK activities</description>
+  
 	<build>
-	  <sourceDirectory>src</sourceDirectory>
+	  <!-- sourceDirectory>src</sourceDirectory>
 	  <testSourceDirectory>tests</testSourceDirectory>
 	  <resources>
 	    <resource>
@@ -15,7 +16,7 @@
 	        <exclude>**/*.java</exclude>
 	      </excludes>
 	    </resource>
-	  </resources>
+	  </resources -->
 	  <plugins>
 	    <plugin>
 	      <artifactId>maven-compiler-plugin</artifactId>
@@ -127,5 +128,5 @@
 			<artifactId>junit</artifactId>
 			<version>4.10</version>
 		</dependency>
-	</dependencies>    
+	</dependencies>   
 </project>

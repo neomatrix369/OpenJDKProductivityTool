@@ -4,7 +4,7 @@
 	Create dist.xml [done] - moved into pom.xml (See bin.xml)
 	Populate Usage.txt [pending]
 	
-	ParseCommandLineArgs all args [pending]
+	ParseCommandLineArgs all args [done]
 		-write tests to implement what's currently in the main() function 
 		(refactor: move implementation to production after tests are available)
 		
@@ -22,3 +22,6 @@
 
 	Refactor DatabaseOfOpenJDKContributors [pending]
 		- move db access code (static data) to test file and amend tests
+		
+02-10-12
+	Enable logging functionality throughout the project using log4J	
