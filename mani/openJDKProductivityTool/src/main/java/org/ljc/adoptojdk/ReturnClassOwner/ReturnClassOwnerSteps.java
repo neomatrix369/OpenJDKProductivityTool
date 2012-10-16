@@ -19,14 +19,14 @@ public class ReturnClassOwnerSteps extends Steps
 	private DatabaseOfOpenJDKContributors dbOpenJDKContributors;
 	private Object classContributor;
  
-	@Given("We have details of a list of contributors who have submitted patches to OpenJDK sorted by date of submission")
+	@Given("We have details of a list of contributors $contributors who have submitted patches to OpenJDK sorted by date of submission")
 	public void getListOfOpenJDKContributors()
 	{
 		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors();
 	}
 
 	
-	@When("A developer runs the utility program in Linux/Unix and passes a fully qualified class name as a parameter")
+	@When("A developer runs the utility program in Linux/Unix and passes a fully qualified class name $classname as a parameter")
 	public void parameterPassed(String paramClassName) throws NotAFullyQualifiedClassNameException
 	{	
 		fullyQualifiedClassName = getFullyQualifiedClassName(paramClassName);
@@ -43,7 +43,7 @@ public class ReturnClassOwnerSteps extends Steps
 	}
 
 	
-	@Then("the utility program should look into the database containing list of contributors and return the contributor and their details, which will contain their email address, etc...")
+	@Then("the utility program should look into the database containing list of contributors and return the contributor $classowner and their details, which will contain their email address, etc...")
 	public void searchOwner()
 	{
 		assertTrue(ifItIs(not(classContributor.equals(""))));

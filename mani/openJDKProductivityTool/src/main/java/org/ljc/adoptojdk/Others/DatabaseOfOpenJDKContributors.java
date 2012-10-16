@@ -1,16 +1,16 @@
 package org.ljc.adoptojdk.Others;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class DatabaseOfOpenJDKContributors {
 	private String[][] databaseOfContributors;
-	public static int DATE_TIME_STAMP = 0;
+	public static int DATE_TIME_STAMP_SUBMISSION = 0;
 	public static int CONTRIBUTOR_NAME = 1;
 	public static int CONTRIBUTOR_EMAIL = 2;
 	public static int FULLY_QUALIFIED_CLASS_NAME = 3;
@@ -92,7 +92,7 @@ public class DatabaseOfOpenJDKContributors {
 		for (int row=0; row<databaseOfContributors.length; row++) {
 			for (int col=0; col<databaseOfContributors[row].length; col++) {
 				if (databaseOfContributors[row].length > columnIndex) {
-					if (databaseOfContributors[row][columnIndex].equals(searchText)) {
+					if (databaseOfContributors[row][columnIndex].trim().equals(searchText)) {
 						result = databaseOfContributors[row];
 						break;
 					}
@@ -111,5 +111,36 @@ public class DatabaseOfOpenJDKContributors {
 
 	public int recordCount() {
 		return databaseOfContributors.length;
+	}
+
+	public String[] getRecord(int row) {
+		String[] result = {};
+		if (databaseOfContributors.length > row) {
+			return databaseOfContributors[row];
+		}
+		return result;
+	}
+
+	public String[][] getRawDatabase() {
+		return databaseOfContributors;
+	}
+
+	public void sortDatabaseBy(int inColumnIndex, boolean inAscendingOrder) {	
+		Arrays.sort(databaseOfContributors, new ArrayComparator(inColumnIndex, inAscendingOrder));
+	}
+
+	class ArrayComparator implements Comparator<Comparable[]> {
+	    private final int columnToSort;
+	    private final boolean ascendingOrder;
+	
+	    public ArrayComparator(int columnToSort, boolean ascendingOrder) {
+	        this.columnToSort = columnToSort;
+	        this.ascendingOrder = ascendingOrder;
+	    }
+	
+	    public int compare(Comparable[] entity1, Comparable[] entity2) {
+	        int comparisonResult = entity1[columnToSort].compareTo(entity2[columnToSort]);
+	        return ascendingOrder ? comparisonResult : -comparisonResult;
+	    }
 	}
 }
