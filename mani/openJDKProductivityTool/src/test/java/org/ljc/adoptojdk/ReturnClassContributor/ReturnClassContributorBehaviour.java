@@ -1,73 +1,81 @@
-package org.ljc.adoptojdk.ReturnClassOwner;
+package org.ljc.adoptojdk.ReturnClassContributor;
 
 import java.util.Arrays;
 
+import org.hamcrest.Matcher;
 import org.junit.Test;
 
 import static org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors.*;
-import static org.ljc.adoptojdk.Others.Fluency.*;
+//import static org.ljc.adoptojdk.Others.Fluency.*;
 
 import org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors;
 import org.ljc.adoptojdk.Others.FullyQualifiedClassName;
 import org.ljc.adoptojdk.Others.NotAFullyQualifiedClassNameException;
+import org.ljc.adoptojdk.ReturnClassContributor.ReturnClassContributor;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasItemInArray;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.CoreMatchers.*;
+
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-public class ReturnClassOwnerBehaviour {
+public class ReturnClassContributorBehaviour {
 	
 	private static final String JAVA_AWT_EVENT_ACTION_CLASSNAME = "java.awt.event.Action";
 	private DatabaseOfOpenJDKContributors dbOpenJDKContributors;
 	private String fullyQualifiedClassName;
-	private String classOwnerName;
-	private String[] classOwnerDetails;
+	private String classContributorName;
+	private String[] classContributorDetails;
 
 	@Test
-	public void shouldReturnClassOwnerNameWhenClassNameIsPassedIn() throws NotAFullyQualifiedClassNameException {
+	public void shouldReturnClassContributorNameWhenClassNameIsPassedIn() throws NotAFullyQualifiedClassNameException {
 		// Given
 		// we have access to a list of contributors
 		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors("dbOfContributorsTest.txt");
 
 		// When
 		// user passes class name (fully qualified or unqualified)
-		ReturnClassOwner returnClassOwner = new ReturnClassOwner(JAVA_AWT_EVENT_ACTION_CLASSNAME);
-		classOwnerName = returnClassOwner.getClassOwnerName();
+		ReturnClassContributor returnClassContributor = new ReturnClassContributor(JAVA_AWT_EVENT_ACTION_CLASSNAME);
+		classContributorName = returnClassContributor.getClassContributorName();
 		
 		// Then
 		// check if result returned is not null
-		assertFalse(ifThe(classOwnerName == null));
+		assertNotNull(classContributorName);
 		// check if result returned is not empty
-		assertFalse(ifThe(classOwnerName.equals("")));
+		assertThat(classContributorName, is(not(equalTo(""))));
 		// check if it returns name of the owner of the java.awt.event.Action class name 
-		assertTrue(ifThe(classOwnerName.equals("jack")));
+		assertThat(classContributorName, is(equalTo("jack")));
 	}
 	
+
 	@Test
-	public void shouldReturnClassOwnerDetailsWhenIsClassNamePassedIn() throws NotAFullyQualifiedClassNameException {
+	public void shouldReturnClassContributorDetailsWhenIsClassNamePassedIn() throws NotAFullyQualifiedClassNameException {
 		// Given
 		// we have access to a list of contributors
 		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors("dbOfContributorsTest.txt");
 
 		// When
 		// user passes class name (fully qualified or unqualified)
-		ReturnClassOwner returnClassOwner = new ReturnClassOwner(JAVA_AWT_EVENT_ACTION_CLASSNAME);
-		classOwnerDetails = returnClassOwner.getClassOwnerDetails();
+		ReturnClassContributor returnClassContributor = new ReturnClassContributor(JAVA_AWT_EVENT_ACTION_CLASSNAME);
+		classContributorDetails = returnClassContributor.getClassContributorDetails();
 		
 		// Then
 		// check if result returned is not null
-		assertFalse(ifThe(classOwnerDetails == null));
+		assertNotNull(classContributorDetails);
 		// check if result returned has 1 or more elements
-		assertTrue(ifThe(classOwnerDetails.length > 0));
+		assertThat(classContributorDetails.length, is(greaterThan(0)));
 		// check if result returned is not empty
-		assertFalse(ifThe(classOwnerDetails.equals("")));
+		assertThat(classContributorDetails.toString(), is(not(equalTo(""))));
 		// check if it returns details of the owner of the java.awt.event.Action class name
-		//System.out.println(Arrays.toString(classOwnerDetails));
-		assertThat(classOwnerDetails, is(
+		//System.out.println(Arrays.toString(classContributorDetails));
+		assertThat(classContributorDetails, is(
 				new String[] {"20/09/2012 22:36:50", "jack", "xxxxyyyzz@gmail.com", 
 						"java.awt.event.Action", "fallthro", "pending review", 
 						"/javac/warnings/core/java/awt/event/", "Action.java.patch"}));		

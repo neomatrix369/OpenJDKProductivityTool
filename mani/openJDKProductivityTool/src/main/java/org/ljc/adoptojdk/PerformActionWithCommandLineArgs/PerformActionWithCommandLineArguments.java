@@ -8,9 +8,9 @@ import org.ljc.adoptojdk.Others.NotAFullyQualifiedClassNameException;
 import org.ljc.adoptojdk.ParseCommandLineArgs.ParseAllCommandLineArguments;
 import org.ljc.adoptojdk.ParseCommandLineArgs.ParseEachCommandLineArgument;
 import org.ljc.adoptojdk.ParseCommandLineArgs.ParsedCommandLineArgsResult;
-import org.ljc.adoptojdk.ReturnClassOwner.ReturnClassOwner;
+import org.ljc.adoptojdk.ReturnClassContributor.ReturnClassContributor;
 
-import static org.ljc.adoptojdk.ReturnClassOwner.ReturnClassOwner.*;
+import static org.ljc.adoptojdk.ReturnClassContributor.ReturnClassContributor.*;
 
 public class PerformActionWithCommandLineArguments {
 
@@ -29,9 +29,9 @@ public class PerformActionWithCommandLineArguments {
 		else {
 			ParsedCommandLineArgsResult commandLineArgsResult = commandLineArguments.getArgumentByIndex(0);
 			
-			if (commandLineArgsResult.getCommandLineSwitch() == CLASS_OWNER_SWITCH) {
-	            ReturnClassOwner returnClassOwner = new ReturnClassOwner(commandLineArgsResult.getResultString());
-	            executionResult = Arrays.toString(returnClassOwner.getClassOwnerDetails());
+			if (commandLineArgsResult.getCommandLineSwitch().equals(CLASS_OWNER_SWITCH)) {
+	            ReturnClassContributor returnClassContributor = new ReturnClassContributor(commandLineArgsResult.getResultString());
+	            executionResult = Arrays.toString(returnClassContributor.getClassContributorDetails());
 			}
 		}
 	}

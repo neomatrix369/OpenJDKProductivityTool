@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import static org.ljc.adoptojdk.Others.Fluency.*;
 
 public class DatabaseOfOpenJDKContributors {
 	private String[][] databaseOfContributors;
@@ -52,6 +53,9 @@ public class DatabaseOfOpenJDKContributors {
 	}
 
 	private String[][] loadDatabaseOfContributors(String dbFilename) {
+		// guarded if statements - Sandro has an affinity for these if-s!
+		if (dbFilename.trim().isEmpty()) return null;
+
 		List<String> linesFromFile = new ArrayList<String>();
 		String readLine = "";
 		FileReader dbFR = null;

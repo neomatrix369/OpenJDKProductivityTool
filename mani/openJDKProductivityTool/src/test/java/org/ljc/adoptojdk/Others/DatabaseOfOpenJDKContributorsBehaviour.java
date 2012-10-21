@@ -1,24 +1,26 @@
 package org.ljc.adoptojdk.Others;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertNotNull;
 import static org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors.*;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
 import org.junit.Test;
+import static org.hamcrest.CoreMatchers.*;
 
 public class DatabaseOfOpenJDKContributorsBehaviour {
 
 	@Test
 	public void shouldGiveAccessToADatabaseWhenFileNameIsPassed() {
 		DatabaseOfOpenJDKContributors dbOpenJDKContributors = new DatabaseOfOpenJDKContributors("./dbOfContributorsTest.txt");
-		assertTrue(dbOpenJDKContributors.isOpen());
-		assertTrue(dbOpenJDKContributors.recordCount() == 5);
+		assertThat(dbOpenJDKContributors.isOpen(), is(true));
+		assertThat(dbOpenJDKContributors.recordCount(), is(5));
 		
 		String[] recordFound = dbOpenJDKContributors.findRecordBy(CONTRIBUTOR_NAME, "jack");
-		assertTrue(recordFound != null);
-		assertTrue(recordFound[CONTRIBUTOR_NAME].trim().equals("jack"));
+		assertNotNull(recordFound);
+		assertThat(recordFound[CONTRIBUTOR_NAME].trim(), is(equalTo("jack")));
 		System.out.println(Arrays.toString(recordFound));
 	}
 	
@@ -32,18 +34,18 @@ public class DatabaseOfOpenJDKContributorsBehaviour {
 		
 		String[] record = null; 
 		record = dbOpenJDKContributors.getRecord(0);
-		assertTrue(record[CONTRIBUTOR_NAME].trim().equals("graham"));
+		assertThat(record[CONTRIBUTOR_NAME].trim(), is(equalTo("graham")));
 		
 		record = dbOpenJDKContributors.getRecord(1);
-		assertTrue(record[CONTRIBUTOR_NAME].trim().equals("richard"));
+		assertThat(record[CONTRIBUTOR_NAME].trim(), is(equalTo("richard")));
 		
 		record = dbOpenJDKContributors.getRecord(2);
-		assertTrue(record[CONTRIBUTOR_NAME].trim().equals("jack"));
+		assertThat(record[CONTRIBUTOR_NAME].trim(), is(equalTo("jack")));
 		
 		record = dbOpenJDKContributors.getRecord(3);
-		assertTrue(record[CONTRIBUTOR_NAME].trim().equals("ben"));
+		assertThat(record[CONTRIBUTOR_NAME].trim(), is(equalTo("ben")));
 		
 		record = dbOpenJDKContributors.getRecord(4);
-		assertTrue(record[CONTRIBUTOR_NAME].trim().equals("martijn"));
+		assertThat(record[CONTRIBUTOR_NAME].trim(), is(equalTo("martijn")));
 	}
 }

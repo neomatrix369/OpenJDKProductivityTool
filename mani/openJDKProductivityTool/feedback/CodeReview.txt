@@ -1,0 +1,70 @@
+Code review by Vaibhav Gowadia (Oct 17 2012)
+--------------------------------------------
+Response followed by initials
+--------------------------------------------
+Following are my thoughts.. 
+I haven't run the code as I do not have Java 7 installed on my machine.  There was also problem doing git clone with the URL you emailed, I used a parent dir location - but I guess that it just a git feature.
+
+
+1.  I find the class names as nouns to be more intuitive. That seems natural as a class represents a types of things / objects.  In current implementation there are some verb phrases used i.e., ParseAllCommandLineArguments, ParseEachCommandLineArgument, ReturnClassOwner. I would recommend using appropriate noun names, e.g. CommanLineArgumentsParser, etc.
+
+It also seems that the verb classes actually do the work (e.g. parsing) when instantiating the object. Perhaps the work should be done by a separate method (e.g. something called parse) which would also return result of parsing. 
+
+In general, I prefer to separate my classes with logic with classes that hold results / data. This allows you to write additional logic that produce / consume same data objects. 
+
+>>> MS, 21/10/12: Class names being changed (underway), will add to to-do list 
+
+2. ParseAllCommandLineArguments 
+- Line 16 will be much more readable if method name getErrorStatus is changed to hasError.
+- Logic for returning finalErrorMessage seems incomplete, as at present it seems to returns a hard coded string, is that the intention?
+
+>>> MS, 21/10/12: above changes applied
+                  finalErrorMessage functionality will be patched soon (underway - already on to-do list)                  
+
+3. ParsedCommandLineArgsResult
+toString() - Using acronyms (e.g. rstStr etc.) is perhaps not a good idea, as it either forces the user of the output to either guess your intention or read the code to figure out what was the real meaning. Also, I doubt we gain anything by saving a few character here.
+>>> MS, 21/10/12: fixed.
+
+Also not sure if there is a need to implement a data holder class like this to be implemented as a mutable object. If implemented as immutable object, class will be much simpler with no additional reset logic. 
+>>> MS, 21/10/12: will add to to do list
+
+4. DatabaseOfOpenJDKContributors
+- The class can use some documentation explaining why it exists. The name is bit intriguing as people don't usually write their own databases :)
+>>> MS, 21/10/12: will add to to do list
+
+- It is also odd that the class has hard coded names inside it. This makes the class non-portable to other projects.
+>>> MS, 21/10/12: to be removed during refactoring, will add to to do list
+
+- loadDatabaseOfContributors() should perhaps check the string passed to it not empty.
+>>> MS, 21/10/12: changed
+
+- loadDatabaseOfContributors()  swallows exception without any action. Perhaps it is better to log some error details, e.g. permission denied / file not found or file path that was being accessed.
+>>> MS, 21/10/12: logging to be implemented, will add to to do list
+
+5. A package called "others" is ambiguous, will recommend replacing it with package(s) with specific responsibilities.
+>>> MS, 21/10/12: will change when doing other refactoring work, will add to to-do list
+
+6. FullyQualifiedClassName class can use documentation explaining why this class exists, i.e. why are not using ClassLoader.resolve or ClassLoader.loadClass methods instead.
+>>> MS, 21/10/12: good idea, didn't know such classes existed, will add to to-do list
+
+7. PerformActionWithCommandLineArguments
+Line 32 - Use .equals for string comparison to be sure that your code always works correctly.
+>>> MS, 21/10/12: fixed
+
+8. ReturnClassOwner can also perhaps use some documentation, in particular it is not clear who / what is a "class owner" and how is it different from "return-class owner"
+
+ReturnClassOwnerScenario & ReturnClassOwnerSteps - should these classes be under test source folder?
+>>> MS, 21/10/12: not sure yet, need to consult BDD experts - added to the to-do list
+
+9. Like the idea of fluency class, it makes the code readable. However, I have observed it is used only from test cases. If that is the intention, it should perhaps live in test source folder.
+>>> MS, 21/10/12: added to the to-do list
+
+
+Test Cases:
+
+DatabaseOfOpenJDKContributorsBehaviour & ReturnClassOwnerBehaviour
+1. Use of assertNotNull / assertEquals would be better instead of using assertTrue with calls to == or equals because in case of test failure those methods will generate more meaningful error messages.
+>>> MS, 21/10/12: applied suggestion throughout the code-base
+
+2. Some comments are redundant (e.g. ReturnClassOwnerBehaviour lines 61-69), it is very clear what the code does there and there is no need for comments.
+>>> MS, 21/10/12: thanks, i'll keep to comments for now and remove during refactoring and static testing

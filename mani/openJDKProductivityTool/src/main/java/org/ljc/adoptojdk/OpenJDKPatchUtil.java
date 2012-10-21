@@ -9,9 +9,10 @@ import org.ljc.adoptojdk.ParseCommandLineArgs.ParseAllCommandLineArguments;
 import org.ljc.adoptojdk.ParseCommandLineArgs.ParseEachCommandLineArgument;
 import org.ljc.adoptojdk.ParseCommandLineArgs.ParsedCommandLineArgsResult;
 import org.ljc.adoptojdk.PerformActionWithCommandLineArgs.PerformActionWithCommandLineArguments;
-import org.ljc.adoptojdk.ReturnClassOwner.ReturnClassOwner;
-import static org.ljc.adoptojdk.ReturnClassOwner.ReturnClassOwner.*;
-import org.ljc.adoptojdk.ReturnClassOwner.ReturnClassOwnerScenario;
+import org.ljc.adoptojdk.ReturnClassContributor.ReturnClassContributor;
+import org.ljc.adoptojdk.ReturnClassContributor.ReturnClassContributorScenario;
+
+import static org.ljc.adoptojdk.ReturnClassContributor.ReturnClassContributor.*;
 
 public class OpenJDKPatchUtil {
 

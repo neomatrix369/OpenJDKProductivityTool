@@ -8,7 +8,7 @@ public class ParsedCommandLineArgsResult {
 	private String errorMessage = "";
 	
 	// Getter
-	public boolean getErrorStatus() {
+	public boolean hasError() {
 		return errorStatus;
 	}
 	
@@ -53,10 +53,10 @@ public class ParsedCommandLineArgsResult {
 
 	public String toString() {
 		
-		String errorStatusWithLabel = "errSts: " + errorStatus;
-		String errorMessageStringWithLabel = "errMsg: " + errorMessage;
-		String resultStringWithLabel = "rstStr: " + resultString;
-		String commandLineSwitchWithLabel = "cmdSwtch: " + commandLineSwitch;
+		String errorStatusWithLabel = "errorStatus: " + errorStatus;
+		String errorMessageStringWithLabel = "errorMessage: " + errorMessage;
+		String resultStringWithLabel = "resultString: " + resultString;
+		String commandLineSwitchWithLabel = "commandLineSwitch: " + commandLineSwitch;
 		
 		if (errorStatus) {
 			if (commandLineSwitch.equals("")) {

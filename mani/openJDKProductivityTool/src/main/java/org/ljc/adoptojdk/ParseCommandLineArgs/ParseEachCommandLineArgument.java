@@ -1,6 +1,6 @@
 package org.ljc.adoptojdk.ParseCommandLineArgs;
 
-import static org.ljc.adoptojdk.ReturnClassOwner.ReturnClassOwner.*;
+import static org.ljc.adoptojdk.ReturnClassContributor.ReturnClassContributor.*;
 
 public class ParseEachCommandLineArgument {
 	
@@ -35,7 +35,7 @@ public class ParseEachCommandLineArgument {
 						parsedResult.setErrorMessage("Error message: " + e.getMessage());
 					}
 					if ((classNames == null) || (classNames.equals(""))) {
-						parsedResult.setErrorMessage(getIncompleteClassOwnerArgsMessage(commandLineArgs));
+						parsedResult.setErrorMessage(getIncompleteClassContributorArgsMessage(commandLineArgs));
 					} else {
 						parsedResult.setResultString(classNames);
 					}
@@ -69,7 +69,7 @@ public class ParseEachCommandLineArgument {
 		return "Invalid arguments passed: [" + inCommandLineArgs + "]. Please see usage text.\n\n";
 	}
 	
-	public static String getIncompleteClassOwnerArgsMessage(String inCommandLineArgs) {
+	public static String getIncompleteClassContributorArgsMessage(String inCommandLineArgs) {
 		return "Incomplete Class Owner's arguments were passed: [" + inCommandLineArgs + "]. Class name(s) missing. Please see usage text.\n\n";
 	}
 }

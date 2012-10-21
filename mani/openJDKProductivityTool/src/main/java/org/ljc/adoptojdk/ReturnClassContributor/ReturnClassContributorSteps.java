@@ -1,8 +1,11 @@
-package org.ljc.adoptojdk.ReturnClassOwner;
+package org.ljc.adoptojdk.ReturnClassContributor;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThat;
+
 import static org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors.*;
-import static org.ljc.adoptojdk.Others.Fluency.*;
+//import static org.ljc.adoptojdk.Others.Fluency.*;
+import static org.hamcrest.CoreMatchers.*;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
@@ -12,7 +15,7 @@ import org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors;
 import org.ljc.adoptojdk.Others.FullyQualifiedClassName;
 import org.ljc.adoptojdk.Others.NotAFullyQualifiedClassNameException;
 
-public class ReturnClassOwnerSteps extends Steps
+public class ReturnClassContributorSteps extends Steps
 {
 
 	private String fullyQualifiedClassName; 
@@ -30,10 +33,10 @@ public class ReturnClassOwnerSteps extends Steps
 	public void parameterPassed(String paramClassName) throws NotAFullyQualifiedClassNameException
 	{	
 		fullyQualifiedClassName = getFullyQualifiedClassName(paramClassName);
-		classContributor = getClassOwnerDetails(fullyQualifiedClassName); 
+		classContributor = getClassContributorDetails(fullyQualifiedClassName); 
 	}
 
-	private String[] getClassOwnerDetails(String fullyQualifiedClassName) {
+	private String[] getClassContributorDetails(String fullyQualifiedClassName) {
 		return dbOpenJDKContributors.findRecordBy(FULLY_QUALIFIED_CLASS_NAME, fullyQualifiedClassName);
 	}
 
@@ -43,9 +46,9 @@ public class ReturnClassOwnerSteps extends Steps
 	}
 
 	
-	@Then("the utility program should look into the database containing list of contributors and return the contributor $classowner and their details, which will contain their email address, etc...")
+	@Then("the utility program should look into the database containing list of contributors and return the contributor $classcontributor and their details, which will contain their email address, etc...")
 	public void searchOwner()
 	{
-		assertTrue(ifItIs(not(classContributor.equals(""))));
+		assertThat(classContributor.toString(), is(not(equalTo(""))));
 	}
 }

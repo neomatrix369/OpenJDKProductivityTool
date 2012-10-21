@@ -9,7 +9,7 @@ import org.ljc.adoptojdk.ParseCommandLineArgs.ParseAllCommandLineArguments;
 
 public class PerformActionWithCommandLineArgsBehaviour {
 	@Test
-	public void shouldShowExecuteClassOwnerSwitchWhenValidClassNameIsPassedIn() throws NotAFullyQualifiedClassNameException {
+	public void shouldShowExecuteClassContributorSwitchWhenValidClassNameIsPassedIn() throws NotAFullyQualifiedClassNameException {
 		String commandLineArgsString = getSampleCommandLineWithNoErrorsArg();
 		String[] commandLineArgs = commandLineArgsString.split(" ");
 		ParseAllCommandLineArguments parseAllCommandLineArguments = new ParseAllCommandLineArguments(commandLineArgs);		

@@ -13,7 +13,7 @@ public class ParseAllCommandLineArguments {
 			ParseEachCommandLineArgument parseCommandLineArgs = new ParseEachCommandLineArgument(eachArg);
 			ParsedCommandLineArgsResult parsedResult = parseCommandLineArgs.getParseResults();
 			resultSet.add(parsedResult);
-			containsAtLeastOneError = containsAtLeastOneError || parsedResult.getErrorStatus();
+			containsAtLeastOneError = containsAtLeastOneError || parsedResult.hasError();
 		}
 		
 		if (containsAtLeastOneError) {

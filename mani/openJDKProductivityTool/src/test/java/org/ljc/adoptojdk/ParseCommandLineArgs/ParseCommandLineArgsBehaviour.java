@@ -3,9 +3,10 @@ package org.ljc.adoptojdk.ParseCommandLineArgs;
 import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.ljc.adoptojdk.ParseCommandLineArgs.ParseEachCommandLineArgument.*;
 import static org.ljc.adoptojdk.ParseCommandLineArgs.ParseAllCommandLineArguments.*;
-import static org.ljc.adoptojdk.ReturnClassOwner.ReturnClassOwner.*;
+import static org.ljc.adoptojdk.ReturnClassContributor.ReturnClassContributor.*;
 
 import org.ljc.adoptojdk.ParseCommandLineArgs.ParseEachCommandLineArgument;
 import org.ljc.adoptojdk.ParseCommandLineArgs.ParsedCommandLineArgsResult;
@@ -18,8 +19,8 @@ public class ParseCommandLineArgsBehaviour {
 		ParseEachCommandLineArgument parseCommandLineArgs = new ParseEachCommandLineArgument(commandLineArgs);
 		ParsedCommandLineArgsResult outputAfterParsingArgs = parseCommandLineArgs.getParseResults();
 		
-		assertTrue(outputAfterParsingArgs.getErrorStatus());		
-		assertTrue(outputAfterParsingArgs.getErrorMessage().equals(getNoArgumentsPassedMessage()));
+		assertThat(outputAfterParsingArgs.hasError(), is(true));		
+		assertThat(outputAfterParsingArgs.getErrorMessage(), is(equalTo(getNoArgumentsPassedMessage())));
 	}
 
 	@Test 
@@ -28,37 +29,37 @@ public class ParseCommandLineArgsBehaviour {
 		ParseEachCommandLineArgument parseCommandLineArgs = new ParseEachCommandLineArgument(commandLineArgs);
 		ParsedCommandLineArgsResult outputAfterParsingArgs = parseCommandLineArgs.getParseResults();
 		
-		assertTrue(outputAfterParsingArgs.getErrorStatus());
-		assertTrue(outputAfterParsingArgs.getErrorMessage().equals(
-				getInvalidArgsPassedMessage(commandLineArgs)));
+		assertThat(outputAfterParsingArgs.hasError(), is(true));
+		assertThat(outputAfterParsingArgs.getErrorMessage(), is(equalTo(
+				getInvalidArgsPassedMessage(commandLineArgs))));
 	}
 	
 	@Test 
-	public void shouldReturnClassNamePassedWithClassOwnerSwitchWithoutASpace() {
-		String commandLineArgs = classNameWithClassOwnerSwitchWithoutASpace();
+	public void shouldReturnClassNamePassedWithClassContributorSwitchWithoutASpace() {
+		String commandLineArgs = classNameWithClassContributorSwitchWithoutASpace();
 		ParseEachCommandLineArgument parseCommandLineArgs = new ParseEachCommandLineArgument(commandLineArgs);
 		ParsedCommandLineArgsResult outputAfterParsingArgs = parseCommandLineArgs.getParseResults();
 		
-		assertFalse(outputAfterParsingArgs.getErrorStatus());
-		assertTrue(outputAfterParsingArgs.getResultString().equals(getClassNamePassed()));
+		assertThat(outputAfterParsingArgs.hasError(), is(false));
+		assertThat(outputAfterParsingArgs.getResultString(), is(equalTo(getClassNamePassed().trim())));
 	}
 	
 	@Test @Ignore
-	public void shouldReturnClassNamePassedWithClassOwnerSwitchWithASpace() {
-		String commandLineArgs = classNameWithClassOwnerSwitchWithASpace();
+	public void shouldReturnClassNamePassedWithClassContributorSwitchWithASpace() {
+		String commandLineArgs = classNameWithClassContributorSwitchWithASpace();
 		ParseEachCommandLineArgument parseCommandLineArgs = new ParseEachCommandLineArgument(commandLineArgs);
 		ParsedCommandLineArgsResult outputAfterParsingArgs = parseCommandLineArgs.getParseResults();
 
-		assertFalse(outputAfterParsingArgs.getErrorStatus());
-		assertTrue(outputAfterParsingArgs.getResultString().equals(getClassNamePassed()));
+		assertThat(outputAfterParsingArgs.hasError(), is(true));
+		assertThat(outputAfterParsingArgs.getResultString(), is(equalTo(getClassNamePassed())));
 	}	
 	
 	
-	private String classNameWithClassOwnerSwitchWithoutASpace() {
+	private String classNameWithClassContributorSwitchWithoutASpace() {
 		return CLASS_OWNER_SWITCH + getClassNamePassed();
 	}
 	
-	private String classNameWithClassOwnerSwitchWithASpace() {
+	private String classNameWithClassContributorSwitchWithASpace() {
 		return CLASS_OWNER_SWITCH + " " + getClassNamePassed();
 	}
 
@@ -67,14 +68,14 @@ public class ParseCommandLineArgsBehaviour {
 	}
 
 	@Test
-	public void shouldShowIncompleteClassOwnerErrorMsgIfIncompleteArgsPassedToProgram() {
-		String commandLineArgs = getIncompleteClassOwnerArgs();
+	public void shouldShowIncompleteClassContributorErrorMsgIfIncompleteArgsPassedToProgram() {
+		String commandLineArgs = getIncompleteClassContributorArgs();
 		ParseEachCommandLineArgument parseCommandLineArgs = new ParseEachCommandLineArgument(commandLineArgs);
 		ParsedCommandLineArgsResult outputAfterParsingArgs = parseCommandLineArgs.getParseResults();
 		
-		assertTrue(outputAfterParsingArgs.getErrorStatus());
-		assertTrue(outputAfterParsingArgs.getErrorMessage().equals(
-				getIncompleteClassOwnerArgsMessage(commandLineArgs)));
+		assertThat(outputAfterParsingArgs.hasError(), is(true));
+		assertThat(outputAfterParsingArgs.getErrorMessage(), is(equalTo(
+				getIncompleteClassContributorArgsMessage(commandLineArgs))));
 	}
 
 	
@@ -84,14 +85,14 @@ public class ParseCommandLineArgsBehaviour {
 		String[] commandLineArgs = commandLineArgsString.split(" ");
 		ParseAllCommandLineArguments parseAllCommandLineArguments = new ParseAllCommandLineArguments(commandLineArgs);
 		
-		assertTrue(parseAllCommandLineArguments.getArgsCount() == 5);
+		assertThat(parseAllCommandLineArguments.getArgsCount(), is(equalTo(5)));
 		ParsedCommandLineArgsResult firstParsedArg = parseAllCommandLineArguments.getFirstArgument();
-		assertFalse(firstParsedArg.getErrorStatus());
-		assertTrue(firstParsedArg.getResultString().equals("java.awt.event.Action"));
-		assertTrue(firstParsedArg.getCommandLineSwitch().equals(CLASS_OWNER_SWITCH));
+		assertThat(firstParsedArg.hasError(), is(false));
+		assertThat(firstParsedArg.getResultString(), is(equalTo("java.awt.event.Action")));
+		assertThat(firstParsedArg.getCommandLineSwitch(), is(equalTo(CLASS_OWNER_SWITCH)));
 		
-		assertTrue(parseAllCommandLineArguments.hasErrors());
-		assertTrue(parseAllCommandLineArguments.finalErrorMessage.equals(getUsageText()));
+		assertThat(parseAllCommandLineArguments.hasErrors(), is(true));
+		assertThat(parseAllCommandLineArguments.finalErrorMessage, is(equalTo(getUsageText())));
 	}
 	
 	@Test
@@ -100,31 +101,31 @@ public class ParseCommandLineArgsBehaviour {
 		String[] commandLineArgs = commandLineArgsString.split(" ");
 		ParseAllCommandLineArguments parseAllCommandLineArguments = new ParseAllCommandLineArguments(commandLineArgs);
 		
-		assertTrue(parseAllCommandLineArguments.getArgsCount() == 4);
+		assertThat(parseAllCommandLineArguments.getArgsCount(), is(equalTo(4)));
 		ParsedCommandLineArgsResult secondParsedArg = parseAllCommandLineArguments.getArgumentByIndex(1);
-		assertTrue(secondParsedArg.getErrorStatus());
-		assertTrue(secondParsedArg.getCommandLineSwitch().equals(""));
-		assertTrue(secondParsedArg.getResultString().equals(""));
+		assertThat(secondParsedArg.hasError(), is(true));
+		assertThat(secondParsedArg.getCommandLineSwitch(), is(equalTo("")));
+		assertThat(secondParsedArg.getResultString(), is(equalTo("")));
 		
 		// contains atleast one error
-		assertTrue(parseAllCommandLineArguments.hasErrors());
-		assertTrue(parseAllCommandLineArguments.finalErrorMessage.equals(getUsageText()));
+		assertThat(parseAllCommandLineArguments.hasErrors(), is(equalTo(true)));
+		assertThat(parseAllCommandLineArguments.finalErrorMessage, is(equalTo(getUsageText())));
 	}
 
 	@Test
-	public void shouldParseAllCommandArgumentsWhenOneNoErrorArgIsPassedToIt() {
+	public void shouldParseAllCommandArgumentsWhenNoErrorArgIsPassedToIt() {
 		String commandLineArgsString = getSampleCommandLineWithNoErrorsArg();
 		String[] commandLineArgs = commandLineArgsString.split(" ");
 		ParseAllCommandLineArguments parseAllCommandLineArguments = new ParseAllCommandLineArguments(commandLineArgs);
 		
-		assertTrue(parseAllCommandLineArguments.getArgsCount() == 1);
+		assertThat(parseAllCommandLineArguments.getArgsCount(), is(equalTo(1)));
 		ParsedCommandLineArgsResult firstParsedArg = parseAllCommandLineArguments.getFirstArgument();
-		assertFalse(firstParsedArg.getErrorStatus());
-		assertTrue(firstParsedArg.getResultString().equals("java.awt.event.Action"));
-		assertTrue(firstParsedArg.getCommandLineSwitch().equals(CLASS_OWNER_SWITCH));
+		assertThat(firstParsedArg.hasError(), is(false));
+		assertThat(firstParsedArg.getResultString(), is(equalTo("java.awt.event.Action")));
+		assertThat(firstParsedArg.getCommandLineSwitch(), is(equalTo(CLASS_OWNER_SWITCH)));
 		
-		assertFalse(parseAllCommandLineArguments.hasErrors());
-		assertFalse(parseAllCommandLineArguments.finalErrorMessage.equals(getUsageText()));
+		assertThat(parseAllCommandLineArguments.hasErrors(), is(false));
+		assertThat(parseAllCommandLineArguments.finalErrorMessage, is(not(equalTo(getUsageText()))));
 	}
 
 	private String getSampleCommandLineWithNoErrorsArg() {
@@ -147,7 +148,7 @@ public class ParseCommandLineArgsBehaviour {
 		return "jsdhfjkdshx"; // some invalid text
 	}	
 
-	private String getIncompleteClassOwnerArgs() {
+	private String getIncompleteClassContributorArgs() {
 		return CLASS_OWNER_SWITCH;
 	}
 }
