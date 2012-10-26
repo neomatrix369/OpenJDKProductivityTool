@@ -1,9 +1,9 @@
-package org.ljc.adoptojdk.ReturnClassContributor;
+package org.ljc.adoptojdk.ClassContributorRetriever;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertThat;
 
-import static org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors.*;
+import static org.ljc.adoptojdk.Database.DatabaseOfOpenJDKContributors.*;
 //import static org.ljc.adoptojdk.Others.Fluency.*;
 import static org.hamcrest.CoreMatchers.*;
 
@@ -11,11 +11,11 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.steps.Steps;
-import org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors;
-import org.ljc.adoptojdk.Others.FullyQualifiedClassName;
-import org.ljc.adoptojdk.Others.NotAFullyQualifiedClassNameException;
+import org.ljc.adoptojdk.ClassName.FullyQualifiedClassName;
+import org.ljc.adoptojdk.ClassName.NotAFullyQualifiedClassNameException;
+import org.ljc.adoptojdk.Database.DatabaseOfOpenJDKContributors;
 
-public class ReturnClassContributorSteps extends Steps
+public class ClassContributorRetrieverSteps extends Steps
 {
 
 	private String fullyQualifiedClassName; 
@@ -25,7 +25,7 @@ public class ReturnClassContributorSteps extends Steps
 	@Given("We have details of a list of contributors $contributors who have submitted patches to OpenJDK sorted by date of submission")
 	public void getListOfOpenJDKContributors()
 	{
-		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors();
+		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors("dbOfContributorsTest.txt");
 	}
 
 	

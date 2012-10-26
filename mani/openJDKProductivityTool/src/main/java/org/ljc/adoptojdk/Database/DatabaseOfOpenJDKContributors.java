@@ -1,4 +1,4 @@
-package org.ljc.adoptojdk.Others;
+package org.ljc.adoptojdk.Database;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import static org.ljc.adoptojdk.Others.Fluency.*;
+
+import static org.ljc.adoptojdk.Naratives.Fluency.*;
 
 public class DatabaseOfOpenJDKContributors {
-	private String[][] databaseOfContributors;
+	private String[][] databaseOfContributors; // data stored in an array object 
+	//TODO: convert to ArrayList<String> instead 
+	
 	public static int DATE_TIME_STAMP_SUBMISSION = 0;
 	public static int CONTRIBUTOR_NAME = 1;
 	public static int CONTRIBUTOR_EMAIL = 2;
@@ -20,10 +23,6 @@ public class DatabaseOfOpenJDKContributors {
 	public static int PATCH_LOCATION = 6;
 	public static int PATCH_FILENAME = 7;
 	
-	public DatabaseOfOpenJDKContributors() {
-		databaseOfContributors = accessDatabaseOfContributors("");
-	}
-
 	public DatabaseOfOpenJDKContributors(String dbFilename) {
 		databaseOfContributors = accessDatabaseOfContributors(dbFilename);
 	}
@@ -31,13 +30,7 @@ public class DatabaseOfOpenJDKContributors {
 	private String[][] createDatabaseOfContributors() {
 		// <Date & Time stamp>, <Contributor Name>, <Contributor Email>, <Full qualified Class Name>, 
 		// <Warning Type>, <Status>, <Patch Location>, <Patch filename>
-		String[][] database = {
-				{"20/09/2012 22:36:50", "jack", "xxxxyyyzz@gmail.com", "java.awt.event.Action", "fallthro", "pending review", "/javac/warnings/core/java/awt/event/", "Action.java.patch"},				
-				{"19/09/2012 22:36:50", "ben", "ppppqqqrrr@gmail.com", "java.awt.Button", "serial", "packaged", "/javac/warnings/core/java/awt/", "Button.java.patch"},
-				{"18/09/2012 22:36:50", "martyn", "mmmnnooo@gmail.com", "java.lang.Class", "static", "accepted", "/javac/warnings/core/java/lang/", "Class.java.patch"},
-				{"21/09/2012 22:36:50", "richard", "rrrssstt@gmail.com", "java.text.Annotation", "try", "reviewed", "/javac/warnings/core/java/text/", "Annotation.java.patch"},
-				{"23/09/2012 22:36:50", "graham", "gghhhii@gmail.com", "java.util.zip.Checksum", "varargs", "rejected", "/javac/warnings/core/java/util/", "Checksum.java.patch"}
-		};
+		String[][] database = { {"", "", "", "", "", "", "", ""} };
 		return database ;
 	}
 
@@ -53,7 +46,7 @@ public class DatabaseOfOpenJDKContributors {
 	}
 
 	private String[][] loadDatabaseOfContributors(String dbFilename) {
-		// guarded if statements - Sandro has an affinity for these if-s!
+		// guarded if statements - Sandro suggests using guarded if-s!
 		if (dbFilename.trim().isEmpty()) return null;
 
 		List<String> linesFromFile = new ArrayList<String>();
@@ -73,6 +66,7 @@ public class DatabaseOfOpenJDKContributors {
 
 			return parseFileContent(linesFromFile);
 		} catch (IOException ex) {
+			System.out.println("Error reading the database: " +  dbFilename);
 			return null;
 		}
 	}

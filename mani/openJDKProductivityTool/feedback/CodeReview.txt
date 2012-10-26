@@ -12,7 +12,8 @@ It also seems that the verb classes actually do the work (e.g. parsing) when ins
 
 In general, I prefer to separate my classes with logic with classes that hold results / data. This allows you to write additional logic that produce / consume same data objects. 
 
->>> MS, 21/10/12: Class names being changed (underway), will add to to-do list 
+>>> MS, 21/10/12: Class names being changed (underway), will add to to-do list
+>>> MS, 26/10/12: Partially completed
 
 2. ParseAllCommandLineArguments 
 - Line 16 will be much more readable if method name getErrorStatus is changed to hasError.
@@ -26,7 +27,7 @@ toString() - Using acronyms (e.g. rstStr etc.) is perhaps not a good idea, as it
 >>> MS, 21/10/12: fixed.
 
 Also not sure if there is a need to implement a data holder class like this to be implemented as a mutable object. If implemented as immutable object, class will be much simpler with no additional reset logic. 
->>> MS, 21/10/12: will add to to do list
+>>> MS, 21/10/12: will add to to do list (how do you implement immutable object? 
 
 4. DatabaseOfOpenJDKContributors
 - The class can use some documentation explaining why it exists. The name is bit intriguing as people don't usually write their own databases :)
@@ -34,12 +35,14 @@ Also not sure if there is a need to implement a data holder class like this to b
 
 - It is also odd that the class has hard coded names inside it. This makes the class non-portable to other projects.
 >>> MS, 21/10/12: to be removed during refactoring, will add to to do list
+>>> MS, 26/10/12: fixed
 
 - loadDatabaseOfContributors() should perhaps check the string passed to it not empty.
 >>> MS, 21/10/12: changed
 
 - loadDatabaseOfContributors()  swallows exception without any action. Perhaps it is better to log some error details, e.g. permission denied / file not found or file path that was being accessed.
 >>> MS, 21/10/12: logging to be implemented, will add to to do list
+>>> MS, 26-10-12: fixed, logging functionality pending
 
 5. A package called "others" is ambiguous, will recommend replacing it with package(s) with specific responsibilities.
 >>> MS, 21/10/12: will change when doing other refactoring work, will add to to-do list

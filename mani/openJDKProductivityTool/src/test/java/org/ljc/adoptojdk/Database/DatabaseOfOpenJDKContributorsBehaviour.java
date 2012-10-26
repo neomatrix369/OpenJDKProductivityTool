@@ -1,13 +1,15 @@
-package org.ljc.adoptojdk.Others;
+package org.ljc.adoptojdk.Database;
 
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertNotNull;
-import static org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors.*;
+import static org.ljc.adoptojdk.Database.DatabaseOfOpenJDKContributors.*;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
 import org.junit.Test;
+import org.ljc.adoptojdk.Database.DatabaseOfOpenJDKContributors;
+
 import static org.hamcrest.CoreMatchers.*;
 
 public class DatabaseOfOpenJDKContributorsBehaviour {

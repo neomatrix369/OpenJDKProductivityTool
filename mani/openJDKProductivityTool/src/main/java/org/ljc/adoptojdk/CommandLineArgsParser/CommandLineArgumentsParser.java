@@ -1,17 +1,17 @@
-package org.ljc.adoptojdk.ParseCommandLineArgs;
+package org.ljc.adoptojdk.CommandLineArgsParser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParseAllCommandLineArguments {
-	List<ParsedCommandLineArgsResult> resultSet = new ArrayList<ParsedCommandLineArgsResult>();
+public class CommandLineArgumentsParser {
+	List<ArgumentsParsedResult> resultSet = new ArrayList<ArgumentsParsedResult>();
 	boolean containsAtLeastOneError = false;
 	String finalErrorMessage = "";
 	
-	public ParseAllCommandLineArguments(String[] commandLineArgs) {
+	public CommandLineArgumentsParser(String[] commandLineArgs) {
 		for (String eachArg: commandLineArgs) {
-			ParseEachCommandLineArgument parseCommandLineArgs = new ParseEachCommandLineArgument(eachArg);
-			ParsedCommandLineArgsResult parsedResult = parseCommandLineArgs.getParseResults();
+			IndividualArgumentParser individualArgumentParser = new IndividualArgumentParser(eachArg);
+			ArgumentsParsedResult parsedResult = individualArgumentParser.getParseResults();
 			resultSet.add(parsedResult);
 			containsAtLeastOneError = containsAtLeastOneError || parsedResult.hasError();
 		}
@@ -25,11 +25,11 @@ public class ParseAllCommandLineArguments {
 		return resultSet.size();
 	}
 
-	public ParsedCommandLineArgsResult getFirstArgument() {
+	public ArgumentsParsedResult getFirstArgument() {
 		return getArgumentByIndex(0);
 	}
 
-	public ParsedCommandLineArgsResult getArgumentByIndex(int i) {
+	public ArgumentsParsedResult getArgumentByIndex(int i) {
 		if (resultSet.size() > i) {
 			return resultSet.get(i);
 		} else {

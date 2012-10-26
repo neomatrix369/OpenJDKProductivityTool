@@ -1,13 +1,13 @@
-package org.ljc.adoptojdk.ParseCommandLineArgs;
+package org.ljc.adoptojdk.CommandLineArgsParser;
 
-import static org.ljc.adoptojdk.ReturnClassContributor.ReturnClassContributor.*;
+import static org.ljc.adoptojdk.ClassContributorRetriever.ClassContributorRetriever.*;
 
-public class ParseEachCommandLineArgument {
+public class IndividualArgumentParser {
 	
-	private ParsedCommandLineArgsResult parsedResult = new ParsedCommandLineArgsResult();
+	private ArgumentsParsedResult parsedResult = new ArgumentsParsedResult();
 	private String commandLineArgs = "";
 	
-	public ParseEachCommandLineArgument(String commandLineArgs) {
+	public IndividualArgumentParser(String commandLineArgs) {
 		this.commandLineArgs = commandLineArgs.trim();		
 		doParseCommandLineArgs(this.commandLineArgs);
 	}
@@ -33,6 +33,7 @@ public class ParseEachCommandLineArgument {
 					catch (Exception e) {
 						classNames = "";
 						parsedResult.setErrorMessage("Error message: " + e.getMessage());
+						System.out.println(parsedResult);
 					}
 					if ((classNames == null) || (classNames.equals(""))) {
 						parsedResult.setErrorMessage(getIncompleteClassContributorArgsMessage(commandLineArgs));
@@ -61,7 +62,7 @@ public class ParseEachCommandLineArgument {
 		return commandLineArgs;
 	}
 	
-	public ParsedCommandLineArgsResult getParseResults() {
+	public ArgumentsParsedResult getParseResults() {
 		return parsedResult;
 	}
 

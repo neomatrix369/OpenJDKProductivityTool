@@ -1,13 +1,13 @@
-package org.ljc.adoptojdk.ReturnClassContributor;
+package org.ljc.adoptojdk.ClassContributorRetriever;
 
-import static org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors.CONTRIBUTOR_NAME;
-import static org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors.FULLY_QUALIFIED_CLASS_NAME;
+import static org.ljc.adoptojdk.Database.DatabaseOfOpenJDKContributors.CONTRIBUTOR_NAME;
+import static org.ljc.adoptojdk.Database.DatabaseOfOpenJDKContributors.FULLY_QUALIFIED_CLASS_NAME;
 
-import org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors;
-import org.ljc.adoptojdk.Others.FullyQualifiedClassName;
-import org.ljc.adoptojdk.Others.NotAFullyQualifiedClassNameException;
+import org.ljc.adoptojdk.ClassName.FullyQualifiedClassName;
+import org.ljc.adoptojdk.ClassName.NotAFullyQualifiedClassNameException;
+import org.ljc.adoptojdk.Database.DatabaseOfOpenJDKContributors;
 
-public class ReturnClassContributor {
+public class ClassContributorRetriever {
 	public static final String CLASS_OWNER_SWITCH = "-co";
 	
 	private String fullyQualifiedClassName; 
@@ -15,8 +15,8 @@ public class ReturnClassContributor {
 	private String classContributorName;
 	private String[] classContributorDetails;
 
-	public ReturnClassContributor(String inClassName) throws NotAFullyQualifiedClassNameException {
-		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors();
+	public ClassContributorRetriever(String inClassName) throws NotAFullyQualifiedClassNameException {
+		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors("dbOfContributorsTest.txt");
 		fullyQualifiedClassName = getFullyQualifiedClassName(inClassName);
 		classContributorDetails = getClassContributorDetails();
 		classContributorName = getClassContributorName();

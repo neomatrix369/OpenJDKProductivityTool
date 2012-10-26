@@ -25,3 +25,6 @@
 		
 02-10-12
 	Enable logging functionality throughout the project using log4J	
+	
+26-10-12
+	in the DatabaseOfOpenJDKContributors convert to databaseOfContributors array to an ArrayList<String> object instead

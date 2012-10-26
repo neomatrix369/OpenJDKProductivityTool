@@ -1,17 +1,17 @@
-package org.ljc.adoptojdk.ReturnClassContributor;
+package org.ljc.adoptojdk.ClassContributorRetriever;
 
 import java.util.Arrays;
 
 import org.hamcrest.Matcher;
 import org.junit.Test;
 
-import static org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors.*;
+import static org.ljc.adoptojdk.Database.DatabaseOfOpenJDKContributors.*;
 //import static org.ljc.adoptojdk.Others.Fluency.*;
 
-import org.ljc.adoptojdk.Others.DatabaseOfOpenJDKContributors;
-import org.ljc.adoptojdk.Others.FullyQualifiedClassName;
-import org.ljc.adoptojdk.Others.NotAFullyQualifiedClassNameException;
-import org.ljc.adoptojdk.ReturnClassContributor.ReturnClassContributor;
+import org.ljc.adoptojdk.ClassContributorRetriever.ClassContributorRetriever;
+import org.ljc.adoptojdk.ClassName.FullyQualifiedClassName;
+import org.ljc.adoptojdk.ClassName.NotAFullyQualifiedClassNameException;
+import org.ljc.adoptojdk.Database.DatabaseOfOpenJDKContributors;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
@@ -26,7 +26,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-public class ReturnClassContributorBehaviour {
+public class ClassContributorRetrieverBehaviour {
 	
 	private static final String JAVA_AWT_EVENT_ACTION_CLASSNAME = "java.awt.event.Action";
 	private DatabaseOfOpenJDKContributors dbOpenJDKContributors;
@@ -38,20 +38,20 @@ public class ReturnClassContributorBehaviour {
 	public void shouldReturnClassContributorNameWhenClassNameIsPassedIn() throws NotAFullyQualifiedClassNameException {
 		// Given
 		// we have access to a list of contributors
-		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors("dbOfContributorsTest.txt");
+		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors("./dbOfContributorsTest.txt");
 
 		// When
 		// user passes class name (fully qualified or unqualified)
-		ReturnClassContributor returnClassContributor = new ReturnClassContributor(JAVA_AWT_EVENT_ACTION_CLASSNAME);
+		ClassContributorRetriever returnClassContributor = new ClassContributorRetriever(JAVA_AWT_EVENT_ACTION_CLASSNAME);
 		classContributorName = returnClassContributor.getClassContributorName();
 		
 		// Then
 		// check if result returned is not null
 		assertNotNull(classContributorName);
 		// check if result returned is not empty
-		assertThat(classContributorName, is(not(equalTo(""))));
+		assertThat(classContributorName.trim(), is(not(equalTo(""))));
 		// check if it returns name of the owner of the java.awt.event.Action class name 
-		assertThat(classContributorName, is(equalTo("jack")));
+		assertThat(classContributorName.trim(), is(equalTo("jack")));
 	}
 	
 
@@ -59,11 +59,11 @@ public class ReturnClassContributorBehaviour {
 	public void shouldReturnClassContributorDetailsWhenIsClassNamePassedIn() throws NotAFullyQualifiedClassNameException {
 		// Given
 		// we have access to a list of contributors
-		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors("dbOfContributorsTest.txt");
+		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors("./dbOfContributorsTest.txt");
 
 		// When
 		// user passes class name (fully qualified or unqualified)
-		ReturnClassContributor returnClassContributor = new ReturnClassContributor(JAVA_AWT_EVENT_ACTION_CLASSNAME);
+		ClassContributorRetriever returnClassContributor = new ClassContributorRetriever(JAVA_AWT_EVENT_ACTION_CLASSNAME);
 		classContributorDetails = returnClassContributor.getClassContributorDetails();
 		
 		// Then
@@ -76,8 +76,8 @@ public class ReturnClassContributorBehaviour {
 		// check if it returns details of the owner of the java.awt.event.Action class name
 		//System.out.println(Arrays.toString(classContributorDetails));
 		assertThat(classContributorDetails, is(
-				new String[] {"20/09/2012 22:36:50", "jack", "xxxxyyyzz@gmail.com", 
-						"java.awt.event.Action", "fallthro", "pending review", 
-						"/javac/warnings/core/java/awt/event/", "Action.java.patch"}));		
+				new String[] {"20/09/2012 22:36:50", " jack", " xxxxyyyzz@gmail.com", 
+						" java.awt.event.Action", " fallthro", " pending review", 
+						" /javac/warnings/core/java/awt/event/", " Action.java.patch\t\t\t"}));		
 	}	
 }
