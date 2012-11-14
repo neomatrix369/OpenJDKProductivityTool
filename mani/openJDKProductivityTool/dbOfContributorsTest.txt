@@ -1,5 +1,0 @@
-20/09/2012 22:36:50, jack, xxxxyyyzz@gmail.com, java.awt.event.Action, fallthro, pending review, /javac/warnings/core/java/awt/event/, Action.java.patch			
-19/09/2012 22:36:50, ben, ppppqqqrrr@gmail.com, java.awt.Button, serial, packaged, /javac/warnings/core/java/awt/, Button.java.patch
-18/09/2012 22:36:50, martijn, mmmnnooo@gmail.com, java.lang.Class, static, accepted, /javac/warnings/core/java/lang/, Class.java.patch
-21/09/2012 22:36:50, richard, rrrssstt@gmail.com, java.text.Annotation, try, reviewed, /javac/warnings/core/java/text/, Annotation.java.patch
-23/09/2012 22:36:50, graham, gghhhii@gmail.com, java.util.zip.Checksum, varargs, rejected, /javac/warnings/core/java/util/, Checksum.java.patch

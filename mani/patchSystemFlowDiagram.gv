@@ -1,0 +1,57 @@
+digraph OpenJDKPatchFlowSystem {
+      subgraph contributor {
+         node [color=maroon]
+         "Contributor intends \n to fix warning(s)" -> "Fork AdoptOpenJDK repo" -> "Use Utility to to view \n List of OpenJDK Warnings" -> "Select a warning" -> "Use Utility to List of \n classes with specific warning" -> 
+         "Fix all classes with warning" -> "Run full OpenJDK build" -> "If builds successfully" -> "Use Utility to enlist \n package(s) for testing" -> 
+         "Run full OpenJDK build" -> "If build fails" -> "Debug and fix build errors" -> "Run full OpenJDK build" ->
+         "Run JTReg tests \n on package(s)" -> "If tests pass" -> "Run createPatch.sh \n to create patch file(s)" -> "Gather patch \n file(s)" -> "Submit patches into the 1-unreviewed folder in the AdoptOpenJDK repo" -> "Send email with details of patches"
+         "Run JTReg tests \n on package(s)" -> "If tests fail" ->  "Debug and fix test errors" -> "Run full OpenJDK build" 
+overlap=false
+      }
+
+      subgraph contributor {
+        node [color=navy]
+       "Retrieve patches from email" -> "Use Utility to scan \n patches for sanity check" -> "Add entries to database \n to record submission" ->  
+      "Use Utility to separate \n patched into 1-unreviewed folder" -> 
+      "Duplicates go into \n 2-duplicates folder" -> 
+      "Complicated ones go into \n 2-further_review_needed folder" -> 
+      "Review process failed, \n send to 2-rejected folder" -> 
+      "Review process passed, \n send to 3-reviewed folder" -> "Apply patches to \n existing OpenJDK build" -> "Run OpenJDK \n build (reviewer)" -> "If tests pass (reviewer)" ->  
+      "Use Utility to put \n passed patches into a package, \n send to 4-packaged folder" -> "Convert to webrev format?"
+      "Use Utility to put \n passed patches into a package, \n send to 4-packaged folder" -> "Send to OpenJDK team" 
+       "Send to OpenJDK team" -> "Packages to \n the AWT Forest"
+       "Send to OpenJDK team" -> "Packages to \n  the Beans Forest"
+       "Send to OpenJDK team" -> "Packages to \n the Lang Forest"
+       "Send to OpenJDK team" -> "Packages to \n the Util Forest"
+       "Send to OpenJDK team" -> "Packages to \n the NIO Forest"
+       "Send to OpenJDK team" -> "Packages to \n the RMI Forest"
+       "Send to OpenJDK team" -> "Packages to \n the Security Forest"
+       "Send to OpenJDK team" -> "Misc packages to \n the OpenJDK Forest"
+
+      /*
+            "Send to OpenJDK team" -> "Patches with java.awt.Component to a separate package"
+            "Send to OpenJDK team" -> "Patches with java.awt.Container to a separate package"
+            "Send to OpenJDK team" -> "Patches with java.awt.Window, Frame, Dialog to a separate package"
+            "Send to OpenJDK team" -> "Patches with java.awt.Menu, MenuItem, MenuBar, PopupMenu, MenuComponent, etc to a separate package"
+            "Send to OpenJDK team" -> "Patches with All other AWT widgets (Button, Checkbox, Choice, TextField, etc.) to a separate package"
+            "Send to OpenJDK team" -> "Patches with java.awt.KeyboardFocusManager, DefaultKeyboardFocusManager to a separate package"
+            "Send to OpenJDK team" -> "Patches with java.awt.KeyboardFocusManager, DefaultKeyboardFocusManager to a separate package"
+            "Send to OpenJDK team" -> "Patches with java.awt.Toolkit to a separate package"
+            "Send to OpenJDK team" -> "Patches with java.awt.datatransfer  to a separate package"
+      */
+      "Run OpenJDK build (reviewer)" -> "If tests fails (reviewer)" -> "Use Utility to seek contributor" -> "Send email to contributor" -> "Mark submission as void" -> "Revert build \n system to original state"
+      overlap=false
+     }
+
+      subgraph openJDKTeams {
+        node [color=darkgreen]
+       "Internal review process after \n receiving patches/packages" ->
+       "Apply patches to the OpenJDK system" -> "Run full build system (OpenJDK team)" ->
+        "If build passes (OpenJDK team)"  -> "Run all JTReg tests (OpenJDK team)" 
+        "If build fails (OpenJDK team)"  -> "Feedback to reviewer negative" -> "Reject patches, revert system"
+       "Run all JTReg tests (OpenJDK team)" ->  "If tests pass (OpenJDK team)" -> "Feedback to reviewer positive" -> "Accept patches, apply to Live" -> "Update web pages to reflect changes, warning scores, etc..."
+       "Run all JTReg tests (OpenJDK team)" ->  "If tests fail (OpenJDK team)" -> "Feedback to reviewer negative" -> "Reject patches, revert system"
+       overlap=false
+     }
+overlap=false
+}
