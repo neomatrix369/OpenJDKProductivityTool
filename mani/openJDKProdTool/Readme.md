@@ -1,10 +1,11 @@
 OpenJDK Productivity Tool
 =========================
+
 This repo for the OpenJDK Productivity Tool source files - a handy program for OpenJDK hackers whilst contributing patches to the Adopt OpenJDK initiative.
 
 Navigation
 ----------
-	src/main - contains java classes performing the logic for the various OpenJDK Productivity Tool.
+    src/main - contains java classes performing the logic for the various OpenJDK Productivity Tool.
 	src/test - contains JUnit & JBehave tests most of the java classes. Units capturing behaviours of the various classes are 
 	also captured here.
 	
@@ -25,11 +26,12 @@ Navigation
 Eclipse environment (Indigo or Juno)
 ------------------------------------
 The below plug-ins / frameworks are installed into the Eclipse framework:
-	* EclEmma (optional)
-	* Infinitest (optional)
-	* EGit
-	* JBehave Code Generator (optional) - (http://www.mazataz.com/resources/JBehaveCodeGeneratorManual.pdf) 
-	* Maven for Eclipse (m2e)
+
+     * EclEmma (optional)
+     * Infinitest (optional)
+     * EGit
+     * JBehave Code Generator (optional)
+     * Maven for Eclipse (m2e)
 	
 Note: most of the above can be installed via the Help > Install New Software menu option in Eclipse, other will need to be manually installed dropping the .jar files into the plugins folder.
 
@@ -38,16 +40,17 @@ Project type: Maven project
 
 Libraries & frameworks
 ----------------------
-The below libraries / frameworks are included into the project and some of them are needed for successfully compilation.
-The pom.xml file helps to resolve these dependencies.
-	* JUnit 4 (required)
-	* JBehave (required) (http://jbehave.org/download.html (See bottom of the page for instructions))
-	* Mokito
-	* Hamcrest
-	* Log4J
-	* SLF4J
+The below libraries / frameworks are included into the project and some of them are needed for successfully compilation. The pom.xml file helps to resolve these dependencies.
+
+     * JUnit 4 (required)
+     * JBehave (required)
+     * Mokito
+     * Hamcrest
+     * Log4J
+     * SLF4J
 
 Note: some of the above can be installed via the Help > Install New Software menu option in Eclipse or by dropping the .jar files into the plugins folder. 
+
 The rest are covered by the pom.xml or require manual intervention. JBehave is required to wire the BDD stories with Java classes & methods will need to be manually installed. 
 
 Resources
