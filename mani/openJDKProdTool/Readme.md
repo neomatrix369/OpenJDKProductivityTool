@@ -1,7 +1,7 @@
 OpenJDK Productivity Tool
 =========================
 
-This repo for the OpenJDK Productivity Tool source files - a handy program for OpenJDK hackers whilst contributing patches to the Adopt OpenJDK initiative.
+This github repo contains source and documentation files for the OpenJDK Productivity Tool - a handy program for OpenJDK hackers whilst contributing patches to the Adopt OpenJDK initiative.
 
 Navigation
 ----------
@@ -23,6 +23,15 @@ Navigation
     ./to-do-list - list of items that are ongoing tasks as the program is developed.
     ./Usage.txt - text file containing the standard usage texts on available options.
 
+Jbehave
+-------
+Source and document files used to create the Jbehave aspects can be found in the following folders:
+
+	src/main/java/org/ljc/adoptojdk/ClassContributorRetriever
+	stories to-do/*.*
+	
+Look for files with suffices 'Step', 'Scenario', '.story', etc.
+
 Eclipse environment (Indigo or Juno)
 ------------------------------------
 The below plug-ins / frameworks are installed into the Eclipse framework:
@@ -33,14 +42,14 @@ The below plug-ins / frameworks are installed into the Eclipse framework:
      * JBehave Code Generator (optional)
      * Maven for Eclipse (m2e)
 	
-Note: most of the above can be installed via the Help > Install New Software menu option in Eclipse, other will need to be manually installed dropping the .jar files into the plugins folder.
+Note: most of the above can be installed via the Help > Install New Software menu option in Eclipse, others will need to be manually installed dropping the .jar files into the plugins folder.
 
 JDK/JRE required (Eclipse environment): minimum 1.6
 Project type: Maven project
 
 Libraries & frameworks
 ----------------------
-The below libraries / frameworks are included into the project and some of them are needed for successfully compilation. The pom.xml file helps to resolve these dependencies.
+The below libraries / frameworks are included in the project and some of them are needed for successful compilation. The pom.xml file helps to resolve these dependencies.
 
      * JUnit 4 (required)
      * JBehave (required)
@@ -50,8 +59,7 @@ The below libraries / frameworks are included into the project and some of them 
      * SLF4J
 
 Note: some of the above can be installed via the Help > Install New Software menu option in Eclipse or by dropping the .jar files into the plugins folder. 
-
-The rest are covered by the pom.xml or require manual intervention. JBehave is required to wire the BDD stories with Java classes & methods will need to be manually installed. 
+JBehave is required to wire the BDD stories with Java classes & methods will need to be manually installed. 
 
 Resources
 ---------
