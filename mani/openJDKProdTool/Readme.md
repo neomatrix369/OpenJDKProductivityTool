@@ -28,10 +28,10 @@ The below plug-ins / frameworks are installed into the Eclipse framework:
 	* EclEmma (optional)
 	* Infinitest (optional)
 	* EGit
-	* JBehave Code Generator (optional) - will need to be manually installed - plugins folder or via Install New Software (http://www.mazataz.com/resources/JBehaveCodeGeneratorManual.pdf)
+	* JBehave Code Generator (optional) - (http://www.mazataz.com/resources/JBehaveCodeGeneratorManual.pdf) 
 	* Maven for Eclipse (m2e)
 	
-Note: most of the above can be installed via the Help > Install New Software menu option in Eclipse.
+Note: most of the above can be installed via the Help > Install New Software menu option in Eclipse, other will need to be manually installed dropping the .jar files into the plugins folder.
 
 JDK/JRE required (Eclipse environment): minimum 1.6
 Project type: Maven project
@@ -41,13 +41,14 @@ Libraries & frameworks
 The below libraries / frameworks are included into the project and some of them are needed for successfully compilation.
 The pom.xml file helps to resolve these dependencies.
 	* JUnit 4 (required)
-	* JBehave (required) - required to wire BDD stories with Java classes & methods will need to be manually installed - plugins folder or via Install New Software (http://jbehave.org/download.html (See bottom of the page for instructions))	
+	* JBehave (required) (http://jbehave.org/download.html (See bottom of the page for instructions))
 	* Mokito
 	* Hamcrest
 	* Log4J
 	* SLF4J
 
-Note: some of the above can be installed via the Help > Install New Software menu option in Eclipse. The rest are covered by the pom.xml or require manual intervention.
+Note: some of the above can be installed via the Help > Install New Software menu option in Eclipse or by dropping the .jar files into the plugins folder. 
+The rest are covered by the pom.xml or require manual intervention. JBehave is required to wire the BDD stories with Java classes & methods will need to be manually installed. 
 
 Resources
 ---------
