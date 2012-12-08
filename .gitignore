@@ -1,10 +1,6 @@
-/nbproject/private/
-/manifest.mf
-/nbproject/
-/build.xml
-/build/
-.classpath
-.project
-.settings/
-eclipse_bin/
-target/
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear

@@ -1,0 +1,37 @@
+[ ] utility that you could give a class name to and have it return an owner in
+some form, preferably one that is easily mapped to an email address. Not
+only would this be useful for what you are asking for here, it would also be
+useful for (semi-)automatically directing messages reporting test failures
+and so on
+
+or
+
+Generate an email with the email address along with other details of the 
+class(es) that failed during testrig tests. Separate emails for separate 
+classes. Email should contain errors and failure details, class names and 
+other class related details. Log all activities. Reviewer feature.
+
+[ ] Build a list of classes and set the package name they belong to, from 
+mercurial. Allow ability to supply exclusion list in case some packages or 
+classes should be excluded using full names or wildcards. Log all activities.
+
+[ ] Update a list of packages from list of classes, in case there are new ones, 
+from mercurial .ie the newly built classes list. Do not delete any packages 
+just add to the list. New packages get unclassified supergroup and group 
+names. Log all activities.
+
+[ ] Return all/some/any class details for any passed details I.e. class or 
+package or group or subgroup name. Log all activities. 
+
+[ ] Build a list of classes to work on (along with other class details, 
+classified by warning types and number of warnings). Should allow fix, 
+patch and test management. Log all activities.
+
+[ ] Allow reviewer to log submissions from contributors, given input of name, 
+email address, date and time of submission. Log errors and indicate in 
+submission file if data is invalid. Only update on resubmission of same data. 
+Indicate add/update activities. Log all activities.
+
+[ ] Build a list of classes to work on (along with other class details, 
+classified with warning types and number of warnings). Should allow fix, patch 
+and test management. Log all activities.

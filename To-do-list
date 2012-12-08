@@ -1,0 +1,30 @@
+29-09-12
+	Populate Readme.md file [pending]
+	Create pom.xml [done]
+	Create dist.xml [done] - moved into pom.xml (See bin.xml)
+	Populate Usage.txt [pending]
+	
+	ParseCommandLineArgs all args [done]
+		-write tests to implement what's currently in the main() function 
+		(refactor: move implementation to production after tests are available)
+		
+	DatabaseOfOpenJDKContributors [done]
+		-write tests to implement reading data off a physical file (given a path and filename)
+	
+	Write example scripts to run and use the utility and place them under the example-scripts folder [pending]
+
+	Refactor DatabaseOfOpenJDKContributors [pending]
+		- convert clunky arrays to proper OO
+		
+30-09-12		
+	DatabaseOfOpenJDKContributors [pending]
+		- does it have all the functionalities tested? tests to guard existing ones? 
+
+	Refactor DatabaseOfOpenJDKContributors [pending]
+		- move db access code (static data) to test file and amend tests
+		
+02-10-12
+	Enable logging functionality throughout the project using log4J	
+	
+26-10-12
+	in the DatabaseOfOpenJDKContributors convert to databaseOfContributors array to an ArrayList<String> object instead

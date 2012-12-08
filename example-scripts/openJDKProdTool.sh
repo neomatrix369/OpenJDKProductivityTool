@@ -1,0 +1,1 @@
+java -Dfile.encoding=Cp1252 -cp .:*.jar org.ljc.adoptojdk.OpenJDKPatchUtil %1 %2 %3 %4 %5
