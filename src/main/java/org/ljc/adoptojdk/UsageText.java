@@ -18,14 +18,18 @@ public class UsageText {
 
 	private static String readFileToString( String filename ) throws IOException {
 		BufferedReader reader = new BufferedReader( new FileReader( filename ) );
-		String         line   = null;
-		StringBuilder  stringBuilder 
-		                      = new StringBuilder();
-		String         ls     = System.getProperty( "line.separator" );
-		
-		while ( ( line = reader.readLine() ) != null ) {
-			stringBuilder.append( line );
-			stringBuilder.append( ls );
+		StringBuilder  stringBuilder = new StringBuilder();
+		try {
+			String         line   = null;			                      
+			String         ls     = System.getProperty( "line.separator" );
+			
+			while ( ( line = reader.readLine() ) != null ) {
+				stringBuilder.append( line );
+				stringBuilder.append( ls );
+			}
+		}
+		finally {
+			reader.close();
 		}
 		return stringBuilder.toString();
 	}

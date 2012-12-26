@@ -34,46 +34,28 @@
 
 package org.ljc.adoptojdk.ClassContributorRetriever;
 
-import java.util.Arrays;
-
-import org.hamcrest.Matcher;
-import org.junit.Test;
-
-import static org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors.*;
-//import static org.ljc.adoptojdk.Others.Fluency.*;
-
-import org.ljc.adoptojdk.ClassContributorRetriever.ClassContributorRetriever;
-import org.ljc.adoptojdk.class_name.FullyQualifiedClassName;
-import org.ljc.adoptojdk.class_name.NotAFullyQualifiedClassNameException;
-import org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors;
-
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.hasItemInArray;
-import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.CoreMatchers.*;
-
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+import org.ljc.adoptojdk.ClassContributorRetriever.ClassContributorRetriever;
+import org.ljc.adoptojdk.className.NotAFullyQualifiedClassNameException;
+import org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors;
 
 public class ClassContributorRetrieverBehaviour {
 	
 	private static final String JAVA_AWT_EVENT_ACTIONEVENT_CLASSNAME = "java.awt.event.ActionEvent";
 	private static final String SIMPLE_NAME_ACTIONEVENT_CLASSNAME = "ActionEvent";
-	private DatabaseOfOpenJDKContributors dbOpenJDKContributors;
-	private String fullyQualifiedClassName;
 	private String classContributorName;
 	private String[] classContributorDetails;
 
 	@Test
 	public void shouldReturnClassContributorNameWhenClassNameIsPassedIn() throws NotAFullyQualifiedClassNameException {
-		// Given
-		// we have access to a list of contributors
-		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors("./dbOfContributorsTest.txt");
+		new DatabaseOfOpenJDKContributors("./dbOfContributorsTest.txt");
 
 		// When
 		// user passes class name (fully qualified or unqualified)
@@ -91,9 +73,7 @@ public class ClassContributorRetrieverBehaviour {
 	
 	@Test
 	public void shouldReturnClassContributorNameWhenSimpleNameClassNameIsPassedIn() throws NotAFullyQualifiedClassNameException {
-		// Given
-		// we have access to a list of contributors
-		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors("./dbOfContributorsTest.txt");
+		new DatabaseOfOpenJDKContributors("./dbOfContributorsTest.txt");
 
 		// When
 		// user passes class name (fully qualified or unqualified)
@@ -111,9 +91,7 @@ public class ClassContributorRetrieverBehaviour {
 
 	@Test
 	public void shouldReturnClassContributorDetailsWhenIsClassNamePassedIn() throws NotAFullyQualifiedClassNameException {
-		// Given
-		// we have access to a list of contributors
-		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors("./dbOfContributorsTest.txt");
+		new DatabaseOfOpenJDKContributors("./dbOfContributorsTest.txt");
 
 		// When
 		// user passes class name (fully qualified or unqualified)

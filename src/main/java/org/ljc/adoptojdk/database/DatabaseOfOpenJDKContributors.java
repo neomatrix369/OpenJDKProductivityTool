@@ -89,11 +89,15 @@ public class DatabaseOfOpenJDKContributors {
 		try {
 			dbFR = new FileReader(dbFilename);			
 			dbBR = new BufferedReader(dbFR);
-			readLine = dbBR.readLine();
-			
-			while (readLine != null) {
-				linesFromFile.add(readLine);
+			try {
 				readLine = dbBR.readLine();
+				
+				while (readLine != null) {
+					linesFromFile.add(readLine);
+					readLine = dbBR.readLine();
+				}
+			} finally {
+				dbBR.close();
 			}
 
 			return parseFileContent(linesFromFile);
@@ -159,7 +163,7 @@ public class DatabaseOfOpenJDKContributors {
 		Arrays.sort(databaseOfContributors, new ArrayComparator(inColumnIndex, inAscendingOrder));
 	}
 
-	class ArrayComparator implements Comparator<Comparable[]> {
+	class ArrayComparator implements Comparator<Comparable<String>[]> {
 	    private final int columnToSort;
 	    private final boolean ascendingOrder;
 	
@@ -168,8 +172,8 @@ public class DatabaseOfOpenJDKContributors {
 	        this.ascendingOrder = ascendingOrder;
 	    }
 	
-	    public int compare(Comparable[] entity1, Comparable[] entity2) {
-	        int comparisonResult = entity1[columnToSort].compareTo(entity2[columnToSort]);
+		public int compare(Comparable<String>[] entity1, Comparable<String>[] entity2) {
+	        int comparisonResult = entity1[columnToSort].compareTo((String) entity2[columnToSort]);
 	        return ascendingOrder ? comparisonResult : -comparisonResult;
 	    }
 	}

@@ -39,8 +39,6 @@ import java.util.List;
 
 import org.ljc.adoptojdk.UsageText;
 
-import static org.ljc.adoptojdk.UsageText.*;
-
 public class CommandLineArgumentsParser {
 	List<ArgumentsParsedResult> resultSet = new ArrayList<ArgumentsParsedResult>();
 	boolean containsAtLeastOneError = false;

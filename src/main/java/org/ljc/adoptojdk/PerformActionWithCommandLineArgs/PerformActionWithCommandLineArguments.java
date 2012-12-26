@@ -34,17 +34,14 @@
 
 package org.ljc.adoptojdk.PerformActionWithCommandLineArgs;
 
-import java.util.Arrays;
+import static org.ljc.adoptojdk.ClassContributorRetriever.ClassContributorRetriever.CLASS_OWNER_SWITCH;
 
-import javax.rmi.CORBA.ClassDesc;
+import java.util.Arrays;
 
 import org.ljc.adoptojdk.ClassContributorRetriever.ClassContributorRetriever;
 import org.ljc.adoptojdk.CommandLineArgsParser.ArgumentsParsedResult;
 import org.ljc.adoptojdk.CommandLineArgsParser.CommandLineArgumentsParser;
-import org.ljc.adoptojdk.CommandLineArgsParser.IndividualArgumentParser;
-import org.ljc.adoptojdk.class_name.NotAFullyQualifiedClassNameException;
-
-import static org.ljc.adoptojdk.ClassContributorRetriever.ClassContributorRetriever.*;
+import org.ljc.adoptojdk.className.NotAFullyQualifiedClassNameException;
 
 public class PerformActionWithCommandLineArguments {
 

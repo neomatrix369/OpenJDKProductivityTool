@@ -32,28 +32,15 @@
  
  */
 
-package org.ljc.adoptojdk.PerformActionWithCommandLineArgs;
+package org.ljc.adoptojdk.className;
 
-import static org.junit.Assert.assertTrue;
+public class NotAFullyQualifiedClassNameException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5825085965491777155L;
 
-import org.junit.Test;
-import org.ljc.adoptojdk.CommandLineArgsParser.CommandLineArgumentsParser;
-import org.ljc.adoptojdk.PerformActionWithCommandLineArgs.PerformActionWithCommandLineArguments;
-import org.ljc.adoptojdk.className.NotAFullyQualifiedClassNameException;
-
-public class PerformActionWithCommandLineArgsBehaviour {
-	@Test
-	public void shouldShowExecuteClassContributorSwitchWhenValidClassNameIsPassedIn() throws NotAFullyQualifiedClassNameException {
-		String commandLineArgsString = getSampleCommandLineWithNoErrorsArg();
-		String[] commandLineArgs = commandLineArgsString.split(" ");
-		CommandLineArgumentsParser parseAllCommandLineArguments = new CommandLineArgumentsParser(commandLineArgs);		
-		PerformActionWithCommandLineArguments executeArguments = new PerformActionWithCommandLineArguments(parseAllCommandLineArguments);
-		
-		assertTrue(executeArguments.getResult().equals(
-			"[19/09/2012 22:36:50,  ben,  ppppqqqrrr@gmail.com,  java.awt.Button,  serial,  packaged,  /javac/warnings/core/java/awt/,  Button.java.patch]"));
-	}
-
-	private String getSampleCommandLineWithNoErrorsArg() {
-		return "-cojava.awt.Button";
+	public NotAFullyQualifiedClassNameException(String message) {
+		super(message);
 	}
 }

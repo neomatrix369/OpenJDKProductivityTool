@@ -44,8 +44,8 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.steps.Steps;
-import org.ljc.adoptojdk.class_name.FullyQualifiedClassName;
-import org.ljc.adoptojdk.class_name.NotAFullyQualifiedClassNameException;
+import org.ljc.adoptojdk.className.FullyQualifiedClassName;
+import org.ljc.adoptojdk.className.NotAFullyQualifiedClassNameException;
 import org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors;
 import static org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors.*;
 

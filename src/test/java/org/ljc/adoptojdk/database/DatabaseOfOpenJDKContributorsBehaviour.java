@@ -37,10 +37,7 @@ package org.ljc.adoptojdk.database;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors.*;
-
 import java.util.Arrays;
-import java.util.Comparator;
-
 import org.junit.Test;
 import org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors;
 

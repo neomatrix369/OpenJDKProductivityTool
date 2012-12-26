@@ -37,8 +37,8 @@ package org.ljc.adoptojdk.ClassContributorRetriever;
 import static org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors.CONTRIBUTOR_NAME;
 import static org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors.FULLY_QUALIFIED_CLASS_NAME;
 
-import org.ljc.adoptojdk.class_name.FullyQualifiedClassName;
-import org.ljc.adoptojdk.class_name.NotAFullyQualifiedClassNameException;
+import org.ljc.adoptojdk.className.FullyQualifiedClassName;
+import org.ljc.adoptojdk.className.NotAFullyQualifiedClassNameException;
 import org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors;
 
 /* 
@@ -80,6 +80,7 @@ public class ClassContributorRetriever {
 	
 	private String fullyQualifiedClassName; 
 	private DatabaseOfOpenJDKContributors dbOpenJDKContributors;
+	@SuppressWarnings("unused")
 	private String classContributorName;
 	private String[] classContributorDetails;
 

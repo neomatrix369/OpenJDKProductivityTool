@@ -1,8 +1,8 @@
 29-09-12
-	Populate Readme.md file [pending]
+	Populate Readme.md file [underway]
 	Create pom.xml [done]
 	Create dist.xml [done] - moved into pom.xml (See bin.xml)
-	Populate Usage.txt [pending]
+	Populate Usage.txt [underway]
 	
 	ParseCommandLineArgs all args [done]
 		-write tests to implement what's currently in the main() function 
@@ -18,13 +18,39 @@
 		
 30-09-12		
 	DatabaseOfOpenJDKContributors [pending]
-		- does it have all the functionalities tested? tests to guard existing ones? 
+			- does it have all the functionalities tested? tests to guard existing ones? 
 
-	Refactor DatabaseOfOpenJDKContributors [pending]
+	Refactor DatabaseOfOpenJDKContributors [done]
 		- move db access code (static data) to test file and amend tests
 		
 02-10-12
 	Enable logging functionality throughout the project using log4J	
 	
 26-10-12
-	in the DatabaseOfOpenJDKContributors convert to databaseOfContributors array to an ArrayList<String> object instead
+	in the DatabaseOfOpenJDKContributors convert to databaseOfContributors array to an ArrayList<String> object instead [duplicate, see above]
+	
+16-11-12
+	* Should classes like ReturnClassOwnerScenario & ReturnClassOwnerSteps be under the test folder? inquire with BDD expert.
+	(BF from code review list).
+	* There are several warnings (by eclipse). [done] 
+	(BF from code review list). 
+	* Unit tests for some classes are missing. e.g. FullyQualifiedClassName, ResolveSimpleNameClassName. Also apply to other classes. 
+	(BF from code review list). 
+    * IndividualArgumentParser - on exception, there does not seem to be a test case that causes an exception. Also apply to other classes.
+    (BF from code review list).
+    * JUnit v/s TestNG - give it a thought!
+    (BF from code review list).	
+    * Code formatting does not seem standard, i.e. eclipse / sun convention. Being the author it's your choice. However, staying with a style 
+    supported by your IDE will keep the formatting consistent.
+    (BF from code review list).
+    * Some comments are redundant (e.g. ReturnClassOwnerBehaviour lines 61-69), it is very clear what the code does there and there is no need for comments.
+    (BF from code review list).	
+    * CommandLineArgumentsParser - ParseArguments method name should start with lower case as per java conventions.
+    (BF from code review list).
+    * IndividualArgumentParser - on exception,  the error message is set twice causing the first message to be lost.
+    (BF from code review list).	
+    
+26-12-12
+	* Apply Mutability Detector to project [pending]
+	
+*** All future issues and to-do items to be added to the github project under the Issues section. ***    

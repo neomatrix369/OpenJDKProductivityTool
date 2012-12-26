@@ -30,7 +30,7 @@ Source and document files used to create the Jbehave aspects can be found in the
 	src/main/java/org/ljc/adoptojdk/ClassContributorRetriever
 	stories to-do/*.*
 	
-Look for files with suffices 'Step', 'Scenario', '.story', etc.
+Look for files with suffices 'Step', 'Scenario', '.story', etc. So far just one feature has been implemented, the first story and some of the scenarios linked to it.
 
 Eclipse environment (Indigo or Juno)
 ------------------------------------

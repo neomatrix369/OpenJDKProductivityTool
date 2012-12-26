@@ -34,19 +34,9 @@
 
 package org.ljc.adoptojdk;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.ljc.adoptojdk.ClassContributorRetriever.ClassContributorRetriever;
-import org.ljc.adoptojdk.ClassContributorRetriever.ClassContributorRetrieverScenario;
-import org.ljc.adoptojdk.CommandLineArgsParser.ArgumentsParsedResult;
 import org.ljc.adoptojdk.CommandLineArgsParser.CommandLineArgumentsParser;
-import org.ljc.adoptojdk.CommandLineArgsParser.IndividualArgumentParser;
 import org.ljc.adoptojdk.PerformActionWithCommandLineArgs.PerformActionWithCommandLineArguments;
-import org.ljc.adoptojdk.class_name.NotAFullyQualifiedClassNameException;
-
-import static org.ljc.adoptojdk.ClassContributorRetriever.ClassContributorRetriever.*;
+import org.ljc.adoptojdk.className.NotAFullyQualifiedClassNameException;
 
 public class OpenJDKPatchUtil {
 
