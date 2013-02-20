@@ -37,19 +37,23 @@ package org.ljc.adoptojdk;
 import org.ljc.adoptojdk.CommandLineArgsParser.CommandLineArgumentsParser;
 import org.ljc.adoptojdk.PerformActionWithCommandLineArgs.PerformActionWithCommandLineArguments;
 import org.ljc.adoptojdk.className.NotAFullyQualifiedClassNameException;
+import org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors;
 
 public class OpenJDKPatchUtil {
+	private static final String DB_OF_CONTRIBUTORS = "./dbOfContributorsTest.txt";
 
 	/**
 	 * @param args
 	 * @throws NotAFullyQualifiedClassNameException 
 	 */
 	public static void main(String[] args) throws NotAFullyQualifiedClassNameException {
+		DatabaseOfOpenJDKContributors databaseOfOpenJDKContributors = new DatabaseOfOpenJDKContributors(DB_OF_CONTRIBUTORS); 
+		
 		// parses all the command line arguments passed in
 		CommandLineArgumentsParser parseAllArgs = new CommandLineArgumentsParser(args);
 		
 		// executes the command using the parsed arguments
-		PerformActionWithCommandLineArguments executeArguments = new PerformActionWithCommandLineArguments(parseAllArgs);
+		PerformActionWithCommandLineArguments executeArguments = new PerformActionWithCommandLineArguments(databaseOfOpenJDKContributors, parseAllArgs);
 		
 		// returns result to console
 		System.out.println(executeArguments.toString());

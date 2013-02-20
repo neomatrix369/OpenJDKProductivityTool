@@ -4,3 +4,8 @@
 *.jar
 *.war
 *.ear
+*.tar
+*.zip
+*.gz
+*.bz2
+

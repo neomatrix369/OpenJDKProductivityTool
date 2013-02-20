@@ -11,7 +11,7 @@ Log all activities. Reviewer feature.
 Narrative:
 In order to be able to inform the contributor of a build failure
 As a reviewer
-I want to retrieve the name and contact details of the submitter using a fully qualified class name
+I want to retrieve the name and contact details of the contributor using a fully qualified class name
 
 
 Background:

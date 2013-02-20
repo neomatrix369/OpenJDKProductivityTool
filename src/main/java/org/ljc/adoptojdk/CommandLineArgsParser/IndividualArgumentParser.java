@@ -34,7 +34,7 @@
 
 package org.ljc.adoptojdk.CommandLineArgsParser;
 
-import static org.ljc.adoptojdk.ClassContributorRetriever.ClassContributorRetriever.*;
+import static org.ljc.adoptojdk.ClassContributorRetriever.ContributorRetriever.*;
 
 public class IndividualArgumentParser {
 	

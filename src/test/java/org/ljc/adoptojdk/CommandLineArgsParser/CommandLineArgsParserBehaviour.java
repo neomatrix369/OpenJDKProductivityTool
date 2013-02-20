@@ -38,7 +38,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
-import static org.ljc.adoptojdk.ClassContributorRetriever.ClassContributorRetriever.*;
+import static org.ljc.adoptojdk.ClassContributorRetriever.ContributorRetriever.*;
 import static org.ljc.adoptojdk.CommandLineArgsParser.CommandLineArgumentsParser.*;
 import static org.ljc.adoptojdk.CommandLineArgsParser.IndividualArgumentParser.*;
 

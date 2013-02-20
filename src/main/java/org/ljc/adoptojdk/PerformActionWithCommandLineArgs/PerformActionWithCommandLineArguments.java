@@ -34,20 +34,21 @@
 
 package org.ljc.adoptojdk.PerformActionWithCommandLineArgs;
 
-import static org.ljc.adoptojdk.ClassContributorRetriever.ClassContributorRetriever.CLASS_OWNER_SWITCH;
+import static org.ljc.adoptojdk.ClassContributorRetriever.ContributorRetriever.CLASS_OWNER_SWITCH;
 
 import java.util.Arrays;
 
-import org.ljc.adoptojdk.ClassContributorRetriever.ClassContributorRetriever;
+import org.ljc.adoptojdk.ClassContributorRetriever.ContributorRetriever;
 import org.ljc.adoptojdk.CommandLineArgsParser.ArgumentsParsedResult;
 import org.ljc.adoptojdk.CommandLineArgsParser.CommandLineArgumentsParser;
 import org.ljc.adoptojdk.className.NotAFullyQualifiedClassNameException;
+import org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors;
 
 public class PerformActionWithCommandLineArguments {
 
 	private String executionResult = "";
 
-	public PerformActionWithCommandLineArguments(CommandLineArgumentsParser commandLineArguments) 
+	public PerformActionWithCommandLineArguments(DatabaseOfOpenJDKContributors databaseOfOpenJDKContributors, CommandLineArgumentsParser commandLineArguments) 
 			throws NotAFullyQualifiedClassNameException {
 		if (commandLineArguments.hasErrors()) {
 			executionResult = "";
@@ -61,8 +62,8 @@ public class PerformActionWithCommandLineArguments {
 			ArgumentsParsedResult argsParsedResult = commandLineArguments.getArgumentByIndex(0);
 			
 			if (argsParsedResult.getCommandLineSwitch().equals(CLASS_OWNER_SWITCH)) {
-	            ClassContributorRetriever returnClassContributor = new ClassContributorRetriever(argsParsedResult.getResultString());
-	            executionResult = Arrays.toString(returnClassContributor.getClassContributorDetails());
+	            ContributorRetriever returnClassContributor = new ContributorRetriever(databaseOfOpenJDKContributors, argsParsedResult.getResultString());
+	            executionResult = Arrays.toString(returnClassContributor.getContributorDetails());
 			}
 		}
 	}
