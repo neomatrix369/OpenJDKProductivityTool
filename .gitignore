@@ -9,3 +9,10 @@
 *.gz
 *.bz2
 
+# Ignore . & ~ files except .gitignore #
+*~
+.*
+target/
+bin/
+!/.gitignore
+
