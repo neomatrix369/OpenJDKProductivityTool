@@ -41,19 +41,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DatabaseOfOpenJDKContributors {
-	private String[][] databaseOfContributors; // data stored in an array object 
+	// data stored in an array object
+	private String[][] databaseOfContributors;
+	private static final Logger COMMON_LOGGER = Logger.getLogger(DatabaseOfOpenJDKContributors.class.getName());
+	
 	//TODO: convert to ArrayList<String> instead 
 	
-	public static int DATE_TIME_STAMP_SUBMISSION = 0;
-	public static int CONTRIBUTOR_NAME = 1;
-	public static int CONTRIBUTOR_EMAIL = 2;
-	public static int FULLY_QUALIFIED_CLASS_NAME = 3;
-	public static int WARNING_TYPE = 4;
-	public static int SUBMISSION_STATUS = 5;
-	public static int PATCH_LOCATION = 6;
-	public static int PATCH_FILENAME = 7;
+	public static final int DATE_TIME_STAMP_SUBMISSION = 0;
+	public static final int CONTRIBUTOR_NAME = 1;
+	public static final int CONTRIBUTOR_EMAIL = 2;
+	public static final int FULLY_QUALIFIED_CLASS_NAME = 3;
+	public static final int WARNING_TYPE = 4;
+	public static final int SUBMISSION_STATUS = 5;
+	public static final int PATCH_LOCATION = 6;
+	public static final int PATCH_FILENAME = 7;
 	
 	public DatabaseOfOpenJDKContributors(String dbFilename) {
 		databaseOfContributors = accessDatabaseOfContributors(dbFilename);
@@ -62,8 +67,7 @@ public class DatabaseOfOpenJDKContributors {
 	private String[][] createDatabaseOfContributors() {
 		// <Date & Time stamp>, <Contributor Name>, <Contributor Email>, <Full qualified Class Name>, 
 		// <Warning Type>, <Status>, <Patch Location>, <Patch filename>
-		String[][] database = { {"", "", "", "", "", "", "", ""} };
-		return database ;
+		return new String[][] { {"", "", "", "", "", "", "", ""} };
 	}
 
 	private String[][] accessDatabaseOfContributors(String dbFilename) {
@@ -79,7 +83,9 @@ public class DatabaseOfOpenJDKContributors {
 
 	private String[][] loadDatabaseOfContributors(String dbFilename) {
 		// guarded if statements - Sandro suggests using guarded if-s!
-		if (dbFilename.trim().isEmpty()) return null;
+		if (dbFilename.trim().isEmpty()) { 
+			return null;
+		}
 
 		List<String> linesFromFile = new ArrayList<String>();
 		String readLine = "";
@@ -102,7 +108,7 @@ public class DatabaseOfOpenJDKContributors {
 
 			return parseFileContent(linesFromFile);
 		} catch (IOException ex) {
-			System.err.println("Error reading the database: " +  dbFilename);
+			COMMON_LOGGER.log(Level.SEVERE, "Error reading the database: " +  dbFilename);
 			return null;
 		}
 	}

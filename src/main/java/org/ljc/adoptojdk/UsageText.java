@@ -4,14 +4,22 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class UsageText {
-	private static final String USAGE_TXT_FILENAME = "./Usage.txt";
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+public final class UsageText {
+	private static final String USAGE_TXT_FILENAME = "./Usage.txt";static final 
+	Logger COMMON_LOGGER = Logger.getLogger(UsageText.class.getName());
+	
+	private UsageText() {
+		//  Hide Utility Class Constructor	false	UsageText.java	Hide Utility Class Constructor : Utility classes should not have a public or default constructor
+	}
+	
 	public static String getUsageText() {
 		try {
 			return readFileToString(USAGE_TXT_FILENAME);
 		} catch (IOException ioe) {
-			System.err.println(USAGE_TXT_FILENAME + " file could not be found.");
+			COMMON_LOGGER.log(Level.SEVERE, USAGE_TXT_FILENAME + " file could not be found.");
 			return "";
 		}
 	}

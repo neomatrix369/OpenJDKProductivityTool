@@ -10,11 +10,11 @@ public class ResolveSimpleNameClassName {
 	private Collection<String> packages = null;
 	
 	public Collection<String> getPackages() {
-	    Set<String> packages = new HashSet<String>();
+	    Set<String> returnPackages = new HashSet<String>();
 	    for (Package aPackage : Package.getPackages()) {
-	        packages.add(aPackage.getName());
+	    	returnPackages.add(aPackage.getName());
 	    }
-	    return packages;
+	    return returnPackages;
 	}
 	
 	public List<String> getFullyQualifiedNames(String simpleName) {

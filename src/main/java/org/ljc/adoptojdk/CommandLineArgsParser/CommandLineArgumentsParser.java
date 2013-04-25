@@ -30,7 +30,7 @@
   2 along with this work; if not, write to the Free Software Foundation,
   Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  
- */
+*/
 
 package org.ljc.adoptojdk.CommandLineArgsParser;
 
@@ -40,17 +40,19 @@ import java.util.List;
 import org.ljc.adoptojdk.UsageText;
 
 public class CommandLineArgumentsParser {
-	List<ArgumentsParsedResult> resultSet = new ArrayList<ArgumentsParsedResult>();
-	boolean containsAtLeastOneError = false;
-	String finalErrorMessage = "";
-	
+	private List<ArgumentsParsedResult> resultSet = new ArrayList<ArgumentsParsedResult>();
+	private boolean containsAtLeastOneError = false;
+	private String finalErrorMessage = "";
+		
 	public CommandLineArgumentsParser(String[] commandLineArgs) {
 		
-		if (commandLineArgs.length == 0) { // no arguments passed	
-			ParseArguments(""); 		
+		// no arguments passed
+		if (commandLineArgs.length == 0) { 	
+			parseArguments(""); 		
 		} else {
+			// arguments passed
 			for (String eachArg: commandLineArgs) {
-				ParseArguments(eachArg);
+				parseArguments(eachArg);
 			}
 		}
 
@@ -59,7 +61,7 @@ public class CommandLineArgumentsParser {
 		}
 	}
 	
-	private void ParseArguments(String eachArg) {
+	private void parseArguments(String eachArg) {
 		IndividualArgumentParser individualArgumentParser = new IndividualArgumentParser(eachArg);
 		ArgumentsParsedResult parsedResult = individualArgumentParser.getParseResults();
 		resultSet.add(parsedResult);

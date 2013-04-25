@@ -37,7 +37,6 @@ package org.ljc.adoptojdk.ClassContributorRetriever;
 import static org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors.CONTRIBUTOR_NAME;
 import static org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors.FULLY_QUALIFIED_CLASS_NAME;
 
-import java.lang.*;
 import org.ljc.adoptojdk.className.FullyQualifiedClassName;
 import org.ljc.adoptojdk.className.NotAFullyQualifiedClassNameException;
 import org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors;
@@ -81,27 +80,25 @@ public class ContributorRetriever {
 	
 	private String fullyQualifiedClassName; 
 	private DatabaseOfOpenJDKContributors dbOpenJDKContributors;
-	@SuppressWarnings("unused")
-	private String classContributorName;
 	private String[] classContributorDetails;
 
 	public ContributorRetriever(DatabaseOfOpenJDKContributors dbOpenJDKContributors, String inClassName) throws NotAFullyQualifiedClassNameException {
-		if (inClassName.equals(null)) 
+		if (inClassName == null) {
 			throw new NullPointerException();
+		}
 		
 		this.dbOpenJDKContributors = dbOpenJDKContributors; 
 		fullyQualifiedClassName = getFullyQualifiedClassName(inClassName);
 		classContributorDetails = getContributorDetails();
-		classContributorName = getContributorName();
 	}
 
-	public String[] getContributorDetails() {
+	public final String[] getContributorDetails() {
 		String[] dbRecord = {};
 		dbRecord = dbOpenJDKContributors.findRecordBy(FULLY_QUALIFIED_CLASS_NAME, fullyQualifiedClassName);
 		return dbRecord;
 	}
 	
-	public String getContributorName() {
+	public final String getContributorName() {
 		String ownerName = "";
 		if ((classContributorDetails != null) && (classContributorDetails.length > 0)) { 
 			ownerName = classContributorDetails[CONTRIBUTOR_NAME];
@@ -110,7 +107,7 @@ public class ContributorRetriever {
 		return ownerName;
 	}
 	
-	public String getFullyQualifiedClassName(String paramClassName) throws NotAFullyQualifiedClassNameException {
+	public final String getFullyQualifiedClassName(String paramClassName) throws NotAFullyQualifiedClassNameException {
 		return new FullyQualifiedClassName(paramClassName).getFullyQualifiedClassName();
 	}
 }

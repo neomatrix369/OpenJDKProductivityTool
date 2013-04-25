@@ -127,7 +127,7 @@ public class CommandLineArgsParserBehaviour {
 		assertThat(firstParsedArg.getCommandLineSwitch(), is(equalTo(CLASS_OWNER_SWITCH)));
 		
 		assertThat(parseAllCommandLineArguments.hasErrors(), is(true));
-		assertThat(parseAllCommandLineArguments.finalErrorMessage, is(equalTo(getUsageText())));
+		assertThat(parseAllCommandLineArguments.getFinalErrorMessage(), is(equalTo(getUsageText())));
 	}
 	
 	@Test
@@ -144,7 +144,7 @@ public class CommandLineArgsParserBehaviour {
 		
 		// contains atleast one error
 		assertThat(parseAllCommandLineArguments.hasErrors(), is(equalTo(true)));
-		assertThat(parseAllCommandLineArguments.finalErrorMessage, is(equalTo(getUsageText())));
+		assertThat(parseAllCommandLineArguments.getFinalErrorMessage(), is(equalTo(getUsageText())));
 	}
 
 	@Test
@@ -160,7 +160,7 @@ public class CommandLineArgsParserBehaviour {
 		assertThat(firstParsedArg.getCommandLineSwitch(), is(equalTo(CLASS_OWNER_SWITCH)));
 		
 		assertThat(parseAllCommandLineArguments.hasErrors(), is(false));
-		assertThat(parseAllCommandLineArguments.finalErrorMessage, is(not(equalTo(getUsageText()))));
+		assertThat(parseAllCommandLineArguments.getFinalErrorMessage(), is(not(equalTo(getUsageText()))));
 	}
 
 	@Test
@@ -176,7 +176,7 @@ public class CommandLineArgsParserBehaviour {
 		assertThat(firstParsedArg.getCommandLineSwitch(), is(equalTo(CLASS_OWNER_SWITCH)));
 		
 		assertThat(parseAllCommandLineArguments.hasErrors(), is(false));
-		assertThat(parseAllCommandLineArguments.finalErrorMessage, is(not(equalTo(getUsageText()))));
+		assertThat(parseAllCommandLineArguments.getFinalErrorMessage(), is(not(equalTo(getUsageText()))));
 	}
 	
 	private String getSampleCommandLineWithNoErrorsArg() {

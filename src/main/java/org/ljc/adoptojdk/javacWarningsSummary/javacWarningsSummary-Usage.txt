@@ -1,0 +1,1 @@
+The way you use the program is that you put rt.jar on the bootclasspath, put the source files (src/*/classes, build/*/gensrc) on the source path, then specify the packages you want to check -- it's been a while since I wrote/used it, so let me know how it goes

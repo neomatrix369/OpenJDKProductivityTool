@@ -34,12 +34,8 @@
 
 package org.ljc.adoptojdk.class_name;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 //http://stackoverflow.com/questions/3845823/getting-list-of-fully-qualified-names-from-a-simple-name
-import java.util.Set;
 
 public class FullyQualifiedClassName {
 	private String className;

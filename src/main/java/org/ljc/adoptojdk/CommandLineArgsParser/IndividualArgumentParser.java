@@ -36,10 +36,14 @@ package org.ljc.adoptojdk.CommandLineArgsParser;
 
 import static org.ljc.adoptojdk.ClassContributorRetriever.ContributorRetriever.*;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class IndividualArgumentParser {
 	
 	private ArgumentsParsedResult parsedResult = new ArgumentsParsedResult();
 	private String commandLineArgs = "";
+	private static final Logger COMMON_LOGGER = Logger.getLogger(IndividualArgumentParser.class.getName());
 	
 	public IndividualArgumentParser(String commandLineArgs) {
 		this.commandLineArgs = commandLineArgs.trim();		
@@ -65,18 +69,16 @@ public class IndividualArgumentParser {
 						classNames = classNames.trim();
 					}
 					catch (Exception e) {
-						classNames = "";
+						classNames = "";						
 						parsedResult.setErrorMessage("Error message: " + e.getMessage());
-						System.err.println(parsedResult);
+						COMMON_LOGGER.log(Level.SEVERE, parsedResult.toString());
 					}
 					if ((classNames == null) || (classNames.equals(""))) {
 						parsedResult.setErrorMessage(getIncompleteClassContributorArgsMessage(commandLineArgs));
 					} else {
 						parsedResult.setResultString(classNames);
 					}
-				} else {
-					// do nothing yet
-				}
+				} 
 			} else {
 				parsedResult.setErrorMessage(getInvalidArgsPassedMessage(commandLineArgs));
 			}
@@ -88,8 +90,7 @@ public class IndividualArgumentParser {
 	}
 
 	private boolean argumentsAreValid(String commandLineArgs) {
-		commandLineArgs = commandLineArgs.trim();
-		return commandLineArgs.toLowerCase().startsWith(CLASS_OWNER_SWITCH);
+		return commandLineArgs.trim().toLowerCase().startsWith(CLASS_OWNER_SWITCH);
 	}
 
 	public String getCommandLineArguments() {

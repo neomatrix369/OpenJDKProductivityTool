@@ -35,11 +35,9 @@
 package org.ljc.adoptojdk.ClassContributorRetriever;
 
 import static org.junit.Assert.assertThat;
-
-import java.util.ArrayList;
-
 import static org.hamcrest.CoreMatchers.*;
 
+import java.util.List;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -51,13 +49,11 @@ import static org.ljc.adoptojdk.database.DatabaseOfOpenJDKContributors.*;
 
 public class ClassContributorRetrieverSteps extends Steps
 {
-
-	private String fullyQualifiedClassName; 
 	private DatabaseOfOpenJDKContributors dbOpenJDKContributors;
 	private Object classContributor;
  
 	@Given("We have details of a list of contributors $classcontributors who have submitted patches to OpenJDK sorted by date of submission")
-	public void getListOfOpenJDKContributors(ArrayList<String> classContributors)
+	public void getListOfOpenJDKContributors(List<String> classContributors)
 	{
 		dbOpenJDKContributors = new DatabaseOfOpenJDKContributors("dbOfContributorsTest.txt");
 	}
@@ -65,7 +61,7 @@ public class ClassContributorRetrieverSteps extends Steps
 	@When("I run openJDKProdTool for class name $classname")
 	public void parameterPassed(String paramClassName) throws NotAFullyQualifiedClassNameException
 	{	
-		fullyQualifiedClassName = getFullyQualifiedClassName(paramClassName);
+		String fullyQualifiedClassName = getFullyQualifiedClassName(paramClassName);
 		classContributor = getClassContributorDetails(fullyQualifiedClassName); 
 	}
 
